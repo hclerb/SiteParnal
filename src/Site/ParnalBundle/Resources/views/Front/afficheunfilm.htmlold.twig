@@ -1,0 +1,82 @@
+{% set mois = [' ','janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'] %}
+{% set lejour = ['Dimanche','Lundi', 'Mardi','Mercredi','Jeudi','Vendredi','Samedi'] %}
+{% set inter = [12,16,18] %}
+{% set conseille = ["Adultes","Adultes et Adolescents","Adolescents","à voir en famille", "Jeune Public"] %}
+<div class="Film_seance">
+  <div class="Fpg">
+    <div class="affiche">
+       <img src="{{asset('img_film/affiches/')}}{{ entities[0].lefilm.image }}" />
+       <span>source {{ entities[0].lefilm.sourceimage }}</span>
+     </div>
+     <div class="Fseance">
+        {% for laseance in entities %}
+               {% if laseance.titre is defined %}
+                    <div id="dgdebat" title="{{ lejour[laseance.jour|date('w')] }} {{ laseance.jour|date(' d ') }} {{ mois[laseance.jour|date('n')] }} {{ laseance.jour|date('H:i') }} "></div>
+                    <p class="cinedebat" chemin="{{ path('SiteParnalBundle_affichedebat', { 'id': laseance.id }) }}">Ciné Rencontre </br>Cliquez pour en savoir plus!</br>
+               {% else %}
+                        <p {% if laseance.relief !=0 or laseance.vo !=0 %}class="seancespe"{% endif %}>
+               {% endif %}
+                {{ lejour[laseance.jour|date('w')] }}
+                {{ laseance.jour|date(' d ') }}
+                {{ mois[laseance.jour|date('n')] }}
+                {{ laseance.jour|date('H:i') }}
+                {% if laseance.vo !=0 %} </br>VO{% endif %}
+                {% if laseance.relief !=0 %}</br>3D{% endif %}
+              </p>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="Fresu">
+            <h1>{{ entities[0].lefilm.titre }}</h1>
+            <h2>Réalisation : {{ entities[0].lefilm.realisateur }}</h2>
+            <h3>{{ entities[0].lefilm.duree }}</h3>
+            <h4>{{ entities[0].lefilm.acteurs }}</h4>
+            {% if entities[0].lefilm.interdiction >0 %} 
+            <h4 class="interdiction">Interdiction aux moins de {{ inter[entities[0].lefilm.interdiction - 1] }}ans</h4> 
+            {%endif %}
+            {% if entities[0].lefilm.conseille >0 %} 
+              <h4 class="conseille">Film {{ conseille[entities[0].lefilm.conseille - 1] }}</h4> 
+            {%endif %}
+            <p>{{ entities[0].lefilm.synopsis|raw }}</p>
+            <p>{{ entities[0].lefilm.critique|raw }}</p>
+            <div class="main_photoT">
+                <div id="slides{{ entities[0].lefilm.id }}">
+                    <div class="slides_container">
+                        {% for lesblocsphotos in lesphotos %}
+                            {% for laphoto in lesblocsphotos %}
+                            <a><img src="{{asset('img_film/photos/')}}{{ laphoto[0].image }}" alt=""/></a>
+                            {% endfor %}
+                        {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript">
+  $("#slides{{ entities[0].lefilm.id }}").slides({
+        preload: true,
+	preloadImage: 'loading.gif',
+	play: 2500,
+	pause: 1500,
+        pagination: true,
+	hoverPause: true
+  });
+  $(".cinedebat").button().click(function(event)
+  {
+      var chemin = $(this).attr("chemin");
+     $("#dgdebat").dialog({
+        show: "slide",
+        width : "864",
+        position: [$("#dgdebat").position().left+150,$("#dgdebat").position().top],
+        create : function(event){
+          $(".cinedebat").button("disable");  
+        },
+        beforeclose : function(event){
+           $(".cinedebat").button("enable");  
+        },
+        open : function (event)
+        {
+          $(this).load(chemin);    
+        },
+     });
+  });
+</script>

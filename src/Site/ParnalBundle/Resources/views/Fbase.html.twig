@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+    <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><![endif]-->
+
+        <link rel="stylesheet" type="text/css" media="screen" href={{ asset('bundles/SiteParnal/themes/eggplant/jquery-ui-1.8.14.custom.css') }} />
+        <link rel="stylesheet" type="text/css" media="screen" href={{ asset('bundles/SiteParnal/css/bootstrap.css') }} />
+        <link rel="stylesheet" type="text/css" media="screen" href={{ asset('bundles/SiteParnal/css/front.css') }} />
+        <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery-1.7.2.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery-ui-1.8.16.custom.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery.form.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/slides.min.jquery.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/bootstrap.min.js' ) }}"></script>        
+    </head>
+<body>
+ <div class="container ">
+  <div class="row" id="header">
+    <div class="span3">   
+      <img id="logoid" src="{{ asset('bundles/SiteParnal/images/logo.png') }}"/>
+    </div>
+    <div id="barrebouton">
+    <div class="span2 offset3"> <button type="button" class="btn btn-parnal btn-large btn-block" id="bpsem">Par Semaine</button></div>
+    <div class="span2"> <button type="button" class="btn btn-parnal btn-large btn-block" id="bptout">Toute la prog</button></div>
+    <div class="span2"> <button type="button" class="btn btn-parnal btn-large btn-block" id="bpprog">Téléchargez !</button></div>
+   </div>
+  </div>
+
+  <div id="contenu">
+   {% block body %}        
+   {% endblock %}
+  </div>
+   <div class="row" id=footer>
+       <div class=span2><a href="http://www.cotecinema.fr" id="cote" TARGET="_blank"><button type="button" class="btn btn-parnalC btn-large btn-block">Coté Cinéma</button></a></div>
+       <div class=span2><a href="{{ path('SiteParnalBundle_home') }}" id="accueil"><button type="button" class="btn btn-parnalC btn-large btn-block">Accueil</button></a></div>
+       <div class=span2><a href="mailto:info@leparnal.net" id="ecrire"><button type="button" class="btn btn-parnalC btn-large btn-block">Nous écrire</button></a></div>
+       <div class=span2><a href="http://www.festivalcinemino.org" id="mino" TARGET="_blank"><button type="button" class="btn btn-parnalC btn-large btn-block">Cinémino</button></a></div>
+       <div class=span2><a href="http://www.ilikecinema.com" id="ilike" TARGET="_blank"><button type="button" class="btn btn-parnalC btn-large btn-block">ILikeCinéma</button></a></div>
+      <div class=span2><a href="http://www.allocine.fr/seance/salle_gen_csalle=P7506.html" id="allo" TARGET="_blank"><button type="button" class="btn btn-parnalC btn-large btn-block">Allociné</button></a></div>
+   </div>
+</div>
+  <script type="text/javascript">
+    $(function(){
+      $("#accueil").button().click(function(event){
+       $("#contenu").load("{{ path('SiteParnalBundle_majhome') }}");
+       $("#bpsem").removeClass('btn-inverse').addClass('btn-parnal');
+       $("#bptout").removeClass('btn-inverse').addClass('btn-parnal');
+       $("#bpprog").removeClass('btn-inverse').addClass('btn-parnal');
+     });
+    /*$("#mino").button();
+    $("#cote").button();
+    $("#allo").button();
+    $("#ilike").button();
+    $("#ecrire").button();*/
+    $("#bpsem").button().click(function(event){     
+       var cejour = new Date();
+       var data="datedeb="+cejour.getFullYear()+'-'+(cejour.getMonth()+1)+'-'+cejour.getDate();
+       $.ajax({
+         url : "{{ path('SiteParnalBundle_bysemaine') }}",
+         type:"get",
+         datatype:"html",
+         data : data,
+         success: function(reponse) {
+                       $("#contenu").html(reponse);
+                       $("#bpsem").removeClass('btn-parnal').addClass('btn-inverse');
+                       $("#bptout").removeClass('btn-inverse').addClass('btn-parnal');
+                       $("#bpprog").removeClass('btn-inverse').addClass('btn-parnal');
+                    }, 
+         error : function(reponse) {
+                      alert(reponse);
+         }
+        });   
+         
+     }); 
+     $("#bptout").button().click(function(event)
+     {
+         $("#contenu").load("{{ path('SiteParnalBundle_reste') }}"); 
+         $("#bpsem").removeClass('btn-inverse').addClass('btn-parnal');
+         $("#bptout").removeClass('btn-parnal').addClass('btn-inverse');
+         $("#bpprog").removeClass('btn-inverse').addClass('btn-parnal');
+     }); 
+     $("#bpprog").button().click(function(event)
+     {
+         $("#contenu").load("{{ path('SiteParnalBundle_telechaargement') }}");
+         $("#bpsem").removeClass('btn-inverse').addClass('btn-parnal');
+         $("#bptout").removeClass('btn-inverse').addClass('btn-parnal');
+         $("#bpprog").removeClass('btn-parnal').addClass('btn-inverse');
+     }); 
+     $("#bpnous").button().click(function(event)
+     {
+         $("#contenu").load("{{ path('SiteParnalBundle_reste') }}");
+     });
+   });
+   $("#logoid").click(function(event){
+      $("#contenu").load("{{ path('SiteParnalBundle_majhome') }}");  
+       $("#bpsem").removeClass('btn-inverse').addClass('btn-parnal');
+       $("#bptout").removeClass('btn-inverse').addClass('btn-parnal');
+       $("#bpprog").removeClass('btn-inverse').addClass('btn-parnal');
+   });
+   </script>
+</body>
+</html>

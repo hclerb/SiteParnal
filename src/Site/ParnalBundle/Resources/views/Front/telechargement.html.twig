@@ -1,0 +1,25 @@
+<div class="row">
+{% for letele in lestelechargements %}
+<div class="telechg">
+    <div class="presentation">{{ letele.presentation|raw }}</div>
+    <div class="lebut" ><a href="{{asset('img_film/telechargements/')}}{{ letele.fichier }}" target="_blank">Je le récupère !</a></div>
+</div>
+{% endfor %}
+<div class="telechg">
+    <p class="presentation">Si vous désirez recevoir par mail :</br>
+       <span class="espace"></span>* nos programmes </br>
+       <span class="espace"></span>* des informations en temps réel</br>
+       Alors notre <strong>mail liste</strong> est faite pour vous !</br>
+       Deux clics souris et vous ferez partie (où vous vous enlèverez) de celle-ci. Un sur le bouton adéquat en dessous pour ouvrir un mail dans votre logiciel de messagerie (tout est déjà prérempli) et un deuxième 
+       dans votre logiciel de messagerie (sur envoi) et voilà le tour est joué !
+    </p>
+    <div class="lebut2" >
+    <a id="inscr" href="mailto:programme@leparnal.net?subject=Inscription à la mail liste&body=Bonjour, merci de m'inscrire à la mail liste du Parnal">Je m'inscris !</a>
+    <a href="mailto:programme@leparnal.net?subject=DésInscription à la mail liste&body=Bonjour, merci de m'enlever à la mail liste du Parnal">Je m'enlève !</a>
+    </div>
+</div>
+</div>
+
+<script type="text/javascript">
+    $("a").button();
+</script>

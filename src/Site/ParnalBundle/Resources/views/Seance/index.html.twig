@@ -1,0 +1,39 @@
+{% set mois = ['','janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'] %}
+{% set lejour = ['Dimanche','Lundi', 'Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'] %}
+
+<table class="records_list">
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ lejour[entity.jour|date('w')] }} {{ entity.jour|date('d') }} {{ mois[entity.jour|date('n')] }} {{ entity.jour|date('Y') }}</td>
+            <td>à {{ entity.jour|date('H:i') }}</td>
+            <td>{{ entity.lefilm.titre }}</td>
+            <td>de {{ entity.lefilm.realisateur }}</td>
+            <td>{% if entity.scolaire ==0 %} Public {% else %} Scolaire {% endif %}</td>
+            <td>{% if entity.vo !=0 %}  VO {% else %} VF {% endif %}</td>
+            <td>{% if entity.relief !=0 %}  3D {% endif %}</td>
+            <td>{{ entity.nbgratuits }} gratuits</td>
+            <td>{{ entity.nbpayants }} payants</td>
+            <td>{% if entity.lemulti.id !=0 %}  {{ entity.lemulti.titre }}{% endif %}</td>
+            <td>
+                {% if entity.titre is defined %}
+                    <span class="Bp" chemin="{{ path('cinedebat_show', { 'id': entity.id }) }}">show</span>
+                    <span class="Bp" chemin="{{ path('cinedebat_edit', { 'id': entity.id }) }}">edit ciné débat</span>
+                  {% else %}
+                    <span class="Bp" chemin="{{ path('seance_show', { 'id': entity.id }) }}">show</span>
+                    <span class="Bp" chemin="{{ path('seance_edit', { 'id': entity.id }) }}">edit</span>
+                {% endif %}
+                <span class="Bp" chemin="{{ path('seance_editentree', { 'id': entity.id }) }}">Saisie Chiffres</span>
+             </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<script type="text/javascript">
+$(function(){
+  $(".Bp").button().click(function(event)
+   {
+    $("#zoneseance").load($(this).attr("chemin"));
+   }); 
+});
+</script>

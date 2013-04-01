@@ -1,0 +1,43 @@
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Image</th>
+            <td>{{ entity.image }}</td>
+        </tr>
+        <tr>
+            <th>Pitch</th>
+            <td>{{ entity.pitch }}</td>
+        </tr>
+    </tbody>
+</table>
+<p id="Bpedit">edit</p>
+<form id="delete" action="{{ path('intervenant_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit" id="bpsup">Delete</button>
+</form>
+<script type="text/javascript">
+$(function(){
+  $("#Bpedit").button().click(function(event)
+   {
+     $("#zoneseance").load("{{ path('intervenant_edit', { 'id': entity.id }) }}");           
+   });   
+  $("#bpsup").button();   
+  $("form").submit(function()
+   {
+    var Data = $(this).serialize();
+     $.ajax({
+       url : "{{ path('intervenant_delete', { 'id': entity.id }) }}",
+       type:"POST",
+       datatype:"text",
+       data : Data,       
+       success: function(reponse) {
+               $("#zoneseance").load("{{ path('intervenant') }}");}
+     }); 
+     return false;
+   });
+});
+</script>

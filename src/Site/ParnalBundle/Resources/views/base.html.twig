@@ -1,0 +1,153 @@
+{# 'app/Resources/views/base.html.twig' #}
+<html>
+    <head>
+        {# ... #}
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
+	<link rel="stylesheet" type="text/css" media="screen" href={{ asset('bundles/SiteParnal/css/main.css') }} />
+        <link rel="stylesheet" type="text/css" media="screen" href={{ asset('bundles/SiteParnal/themes/cupertino/jquery-ui-1.8.14.custom.css') }} />
+        
+        <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery-1.6.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery-ui-1.8.16.custom.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery.ui.datepicker-fr.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery.form.js') }}"></script>
+{#       <script type="text/javascript" src="{{ asset('bundles/stfalcontinymce/vendor/tiny_mce/jquery.tinymce.js') }}"></script>#}
+    </head>
+    <body>
+        {# ... #}
+        <h1>Administration Site Cinéma Le Parnal</h1>
+        <div id=tabs>
+            <ul>
+                <li><a href=#tabaccueil>Accueil</a></li>
+                <li><a href=#tabfilm>Films</a></li>
+                <li><a href=#tabseance>Séances</a></li>
+                <li><a href=#tabmultiev>Multi Evènements</a></li>
+                <li><a href=#tabtele>Téléchargements</a></li>
+                <li><a href=#tabanno>Annonces</a></li>                
+            </ul>
+            <div id=tabaccueil>
+                <p id="bpgenA_E">Génération rapport de programmation A&E</p> 
+                <p id="bpgenAnnuel">Génération rapport de programmation Annuel</p> 
+                <a id="byby" href="{{ path('_security_logout') }}">Logout</a>
+                <div id="zonecontenu"></div>
+            </div>
+            <div id=tabfilm>
+                <p id="BpListerA">Lister tous les films</p>
+                <p id="BpAjouter">Ajouter un film</p> 
+                <p id="BpActif">Lister films actifs</p>
+                <p id="BpInactif">Lister films rangés</p>
+                <p id="BpListerFNC">Lister les films non classés</p>
+                <p id="bpRinactif">Rendre inactif les films</p>
+                <div id="zonefilm"></div>
+            </div>
+            <div id=tabseance>
+                <p id="BpListerSR">Lister les séances restantes</p>
+                <p id="BpListerS">Lister toutes les Séances</p>
+                <p id="BpListerSI">Lister les séances incomplètes</p>
+                <p id="BpAjouterS">Ajouter une séance</p> 
+                <p id="BpAjouterC">Ajouter une séance ciné-débat</p> 
+                <p id="BpAjouterI">Ajouter un intervenant</p>
+                <p id="BpAjouterIl">Lister les intervenants</p>
+                <div id="zoneseance"></div>
+            </div>
+            <div id=tabmultiev>
+                <p id="BpListerM">Lister tous les MultiPass</p>
+                <p id="BpAjouterM">Ajouter un Multipass</p>  
+                <div id="zonemulti"></div>
+            </div>
+            <div id=tabtele>
+                <p id="BpListerT">Lister tous les téléchargements</p>
+                <p id="BpAjouterT">Ajouter un téléchargement</p>  
+                <div id="zonetele"></div>
+            </div> 
+            <div id=tabanno>
+                <p id="BpListerAn">Lister toutes les annonces</p>
+                <p id="BpAjouterAn">Ajouter une annonce</p>  
+                <div id="zoneanno"></div>
+            </div>                  
+        </div>
+     {% block body %}
+     {% endblock %}
+     <script type="text/javascript"> 
+        $("#bpgenA_E").button();
+        $("#bpgenAnnuel").button();
+        $("#byby").button(); 
+        $("#BpListerA").button().click(function(event)
+         {
+           $("#zonefilm").load("{{ path('film') }}"); 
+         });        
+        $("#BpAjouter").button().click(function(event)
+         {
+           $("#zonefilm").load("{{ path('film_new') }}"); 
+         });
+        $("#BpActif").button().click(function(event)
+         {
+           $("#zonefilm").load("{{ path('film_actif') }}"); 
+         });        
+        $("#BpInactif").button().click(function(event)
+         {
+           $("#zonefilm").load("{{ path('film_nactif') }}"); 
+         });
+        $("#BpListerFNC").button().click(function(event)
+         {
+           $("#zonefilm").load("{{ path('film_nclasse') }}"); 
+         });          
+        $("#bpRinactif").button().click(function(event)
+         {
+           $("#zonefilm").load("{{ path('film_rangertout') }}"); 
+         });         
+        $("#BpListerSR").button().click(function(event)
+         {
+           $("#zoneseance").load("{{ path('seance_restante') }}"); 
+         });
+       $("#BpListerS").button().click(function(event)
+         {
+           $("#zoneseance").load("{{ path('seance') }}"); 
+         }); 
+       $("#BpListerSI").button().click(function(event)
+         {
+           $("#zoneseance").load("{{ path('seance_incomp') }}"); 
+         });          
+        $("#BpAjouterS").button().click(function(event)
+         {
+           $("#zoneseance").load("{{ path('seance_new') }}"); 
+         });     
+        $("#BpAjouterC").button().click(function(event)
+         {
+           $("#zoneseance").load("{{ path('cinedebat_new') }}"); 
+         });
+        $("#BpAjouterI").button().click(function(event)
+         {
+           $("#zoneseance").load("{{ path('intervenant_new') }}"); 
+         });        
+        $("#BpAjouterIl").button().click(function(event)
+         {
+           $("#zoneseance").load("{{ path('intervenant') }}"); 
+         });
+         $("#BpListerM").button().click(function(event)
+         {
+           $("#zonemulti").load("{{ path('multiev') }}"); 
+         });        
+        $("#BpAjouterM").button().click(function(event)
+         {
+           $("#zonemulti").load("{{ path('multiev_new') }}"); 
+         }); 
+         $("#BpListerT").button().click(function(event)
+         {
+           $("#zonetele").load("{{ path('programme') }}"); 
+         }); 
+        $("#BpAjouterT").button().click(function(event)
+         {
+           $("#zonetele").load("{{ path('programme_new') }}"); 
+         }); 
+         $("#BpListerAn").button().click(function(event)
+         {
+           $("#zoneanno").load("{{ path('annonce') }}"); 
+         }); 
+        $("#BpAjouterAn").button().click(function(event)
+         {
+           $("#zoneanno").load("{{ path('annonce_new') }}"); 
+         }); 
+        $("#bpRinactif").button();
+    </script>
+    </body>
+</html>

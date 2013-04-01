@@ -1,0 +1,41 @@
+<h1>Annonce</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Lannonce</th>
+            <td>{{ entity.lannonce }}</td>
+        </tr>
+        <tr>
+            <th>Debut</th>
+            <td>{{ entity.debut|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Fin</th>
+            <td>{{ entity.fin|date('Y-m-d H:i:s') }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('annonce') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('annonce_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('annonce_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

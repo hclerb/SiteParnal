@@ -1,0 +1,56 @@
+{% set mois = ['','janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'] %}
+{% set lejour = ['Dimanche','Lundi', 'Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'] %}
+
+<h2>{{ entity.lefilm.titre }}{% if entity.vo !=0 %} VO{% endif %}{% if entity.relief !=0 %} 3D{% endif %}</h2>
+<h4>{{ lejour[entity.jour|date('w')] }} {{ entity.jour|date('d') }} {{ mois[entity.jour|date('n')] }} {{ entity.jour|date('Y') }} à {{ entity.jour|date('H:i') }}</h4>
+
+<form id="seanceupdate" action="{{ path('seance_updateentree', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit" id="bpedit">Modification</button>
+    </p>
+</form>
+<form id="delete" action="{{ path('seance_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit" id="bpsup">Delete</button>
+</form>
+
+<script type="text/javascript">
+$(function(){
+ $("#site_parnalbundle_seancetype_jour").datepicker();
+ $("#bpedit").button();
+ $("#bpsup").button();
+ $("#seanceupdate").submit(function()
+  { 
+    var Data = $(this).serialize();
+         $.ajax({
+              url : "{{ path('seance_updateentree', { 'id': entity.id }) }}",
+              type:"POST",
+              datatype:"text",
+              data : Data,
+              success: function(reponse) {
+                       if (reponse==1) {
+                         $("#zoneseance").load("{{ path('seance_restante') }}"); 
+                       }
+                    }, 
+              error : function(reponse) {
+                      alert(reponse);
+              }
+          }); 
+          return false;
+   });
+  $("#delete").submit(function()
+   {
+    var Data = $(this).serialize();
+     $.ajax({
+       url : "{{ path('seance_delete', { 'id': entity.id }) }}",
+       type:"POST",
+       datatype:"text",
+       data : Data,       
+       success: function(reponse) {
+               $("#zoneseance").load("{{ path('seance_restante') }}");}
+     }); 
+     return false;
+   });
+});
+</script>

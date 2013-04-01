@@ -1,0 +1,29 @@
+annonce:
+    pattern:  /
+    defaults: { _controller: "SiteParnalBundle:Annonce:index" }
+
+annonce_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SiteParnalBundle:Annonce:show" }
+
+annonce_new:
+    pattern:  /new
+    defaults: { _controller: "SiteParnalBundle:Annonce:new" }
+
+annonce_create:
+    pattern:  /create
+    defaults: { _controller: "SiteParnalBundle:Annonce:create" }
+    requirements: { _method: post }
+
+annonce_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SiteParnalBundle:Annonce:edit" }
+
+annonce_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SiteParnalBundle:Annonce:update" }
+    requirements: { _method: post }
+
+annonce_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SiteParnalBundle:Annonce:delete" }

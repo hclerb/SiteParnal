@@ -1,0 +1,15 @@
+{% extends "SiteParnalBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    {% stylesheets %}
+        <link rel="stylesheet" type="text/css" media="screen" href={{ asset('bundles/SiteParnal/themes/cupertino/jquery-ui-1.8.14.custom') }} />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+      <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery-1.6.2.js') }}"></script>
+      <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery-ui-1.8.16.custom.min.js') }}"></script>
+      <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery.ui.datepicker-fr.js') }}"></script>
+      <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery.form.js') }}"></script>
+      <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/tiny_mce/tiny_mce.js') }}"></script> 
+{% endblock %}

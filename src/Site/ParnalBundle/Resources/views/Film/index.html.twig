@@ -1,0 +1,39 @@
+<table class="records_list">
+    <tbody>
+    {% for entity in entities %}
+        <tr {% if entity.actif==0 %} class="inactif" {% else %}class="actif"{% endif %}>
+            <td><img src="{{asset('img_film/affiches/')}}{{entity.image}}" /></td>
+            <td>{{ entity.titre }}</td>
+            <td>{{ entity.realisateur }}</td>
+            {% if entity.artessai==1 %}
+               <td>Art et Essai</td>
+              {% if entity.labjp==1 %} <td>Jeune Public</td>{% else %}<td></td>{% endif %}
+              {% if entity.labrecherche==1 %} <td>Recherche</td>{% else %}<td></td>{% endif %}
+              {% if entity.labpatrimoine==1 %} <td>Patrimoine</td>{% else %}<td></td>{% endif %}
+             {% else %}<td>Non Classé</td><td></td><td></td><td></td>
+            {% endif %}
+            {% if entity.copieadrc==1 %}<td>ADRC</td>{% else %}<td></td>{% endif %}
+            <td>
+                <span class="Bp" chemin="{{ path('film_show', { 'id': entity.id }) }}">show</span>
+                <span class="Bp" chemin="{{ path('film_edit', { 'id': entity.id }) }}">edit</span>
+                <span class="Bp" chemin="{{ path('film_cpltssaffiche', { 'id': entity.id }) }}">edit ss affiche</span>
+                <span class="Bp" chemin="{{ path('film_classement', { 'id': entity.id }) }}">Classement</span>
+                {% if entity.actif==0 %}
+                  <span class="Bp" chemin="{{ path('film_activer', { 'id': entity.id }) }}">Activer</span>
+                {% else %}
+                  <span class="Bp" chemin="{{ path('film_ranger', { 'id': entity.id }) }}">Ranger</span>
+                {% endif %}
+                <span class="Bp" chemin="{{ path('image_newforfilm', { 'id': entity.id }) }}">Ajouter Photos</span>
+                <span class="Bp" chemin="{{ path('image_byfilm', { 'id': entity.id }) }}">Lister Photos</span>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<script type="text/javascript">
+  $(".Bp").button().click(function(event)
+   {
+    $("#zonefilm").load($(this).attr("chemin"));
+   }); 
+</script>

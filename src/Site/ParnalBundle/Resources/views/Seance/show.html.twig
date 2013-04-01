@@ -1,0 +1,83 @@
+{% set mois = [' ','janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'] %}
+{% set lejour = ['Dimanche','Lundi', 'Mardi','Mercredi','Jeudi','Vendredi','Samedi'] %}
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Jour</th>
+            <td>{{ lejour[entity.jour|date('w')] }} {{ entity.jour|date('d') }} {{ mois[entity.jour|date('n')] }} {{ entity.jour|date('Y') }} à {{ entity.jour|date('H:i') }}</td>
+        </tr>
+        <tr>
+            <th>Film</th>
+            <td>{{ entity.lefilm.titre }}</td>
+        </tr>
+        <tr>
+            <th>Scolaire</th>
+            <td>{{ entity.scolaire }}</td>
+        </tr>
+        <tr>
+            <th>VO</th>
+            <td>{{ entity.vo }}</td>
+        </tr>
+        <tr>
+            <th>Relief</th>
+            <td>{{ entity.relief }}</td>
+        </tr>
+        <tr>
+            <th>Argentique</th>
+            <td>{{ entity.argentique }}</td>
+        </tr>
+        {% if entity.lemulti.id !=0 %}
+          <tr>
+            <th>Fait partie </th>
+            <td>{{ entity.lemulti.titre }}</td>
+          </tr>
+        {% endif %}
+        <tr>
+            <th>Entrées Gratuites</th>
+            <td>{{ entity.nbgratuits }}</td>
+        </tr>
+        <tr>
+            <th>Entrées Payantes</th>
+            <td>{{ entity.nbpayants }}</td>
+        </tr>
+    </tbody>
+</table>
+<p id="Bpedit">edit</p>
+<span id="Bptransform">Transforme en cine débat</span>
+<form id="delete" action="{{ path('seance_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit" id="bpsup">Delete</button>
+</form>
+<script type="text/javascript">
+$(function(){
+  $("#Bpedit").button().click(function(event)
+   {
+     $("#zoneseance").load("{{ path('seance_edit', { 'id': entity.id }) }}");           
+   }); 
+
+  $("#Bptransform").button().click(function(event)
+   {
+     $("#zoneseance").load("{{ path('seance_nowcinedebat', { 'id': entity.id }) }}");           
+   }); 
+   
+  $("form").submit(function()
+   {
+    var Data = $(this).serialize();
+     $.ajax({
+       url : "{{ path('seance_delete', { 'id': entity.id }) }}",
+       type:"POST",
+       datatype:"text",
+       data : Data,       
+       success: function(reponse) {
+               $("#zoneseance").load("{{ path('seance_restante') }}");}
+     }); 
+     return false;
+   });
+  $("#bpsup").button();
+});
+</script>

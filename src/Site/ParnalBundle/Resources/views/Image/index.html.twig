@@ -1,0 +1,27 @@
+<h2> Photos pour le film {{ entities.0.lefilm.titre }}</h2>
+<table class="records_list">
+    <tbody>
+    {% for entity in entities %}
+        <tr id="tr{{ entity.id }}">
+            <td><img src="{{asset('img_film/photos/')}}{{entity.image}}" /></td>
+            <td>
+                  <span class="bpsup" chemin="{{ path('image_delete', { 'id': entity.id }) }}">Delete</span>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>   
+<script type="text/javascript">
+$(function(){
+  $(".bpsup").button().click(function(event)
+   {
+      $.ajax({
+              url : $(this).attr("chemin"),
+              success: function(reponse) {
+                       var chaine = "\"#tr" + reponse + "\"";
+                        $("tr").remove(chaine);
+                    }    
+                });
+   }); 
+});
+</script>

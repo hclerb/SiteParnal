@@ -1,0 +1,69 @@
+<div>
+<div>
+<div id="resumed">
+  <p>Résumé à déployer</p>
+  <textarea id="resume" ></textarea>
+</div>
+<p id="boutondep">Deployer >>></p>
+</div>
+
+<form id="formfilm" action="{{ path('film_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}    
+ <button type="submit" id="bpsub">Ajouter le film</button>
+</form>
+</div>
+<script type="text/javascript">
+  $(function(){
+       var options = { 
+        type:           "POST",
+        success: function() {
+               $("#resume").val("");
+               $("#site_parnalbundle_filmtype_titre").val("");
+               $("#site_parnalbundle_filmtype_realisateur").val("");
+               $("#site_parnalbundle_filmtype_duree").val("");
+               $("#site_parnalbundle_filmtype_acteurs").val("");
+               $("#site_parnalbundle_filmtype_synopsis").val("");
+               $("#site_parnalbundle_filmtype_critique").val("");
+               fileField     = document.getElementById("site_parnalbundle_filmtype_image");
+               parentNod     = fileField.parentNode;
+               tmpForm        = document.createElement("form");
+               parentNod.replaceChild(tmpForm,fileField);
+               tmpForm.appendChild(fileField);
+               tmpForm.reset();
+               parentNod.replaceChild(fileField,tmpForm);
+          }
+        };
+      $("#bpsub").button().click(function(event){
+         $("#formfilm").ajaxSubmit(options); 
+         return false;     
+     });
+      $("#site_parnalbundle_filmtype_date_sortie").datepicker();
+      $("#boutondep").button().click(function(event)
+       {// traitement du texte à déployer
+          var chaine = $("#resume").val();
+          var elem = chaine.split("\n");
+               $("#site_parnalbundle_filmtype_titre").val(elem[0]);
+               $("#site_parnalbundle_filmtype_realisateur").val(elem[1]);
+               $("#site_parnalbundle_filmtype_duree").val(elem[2]);
+               $("#site_parnalbundle_filmtype_acteurs").val(elem[3]);
+               $("#site_parnalbundle_filmtype_synopsis").val(elem[4]);
+               $("#site_parnalbundle_filmtype_critique").val(elem[5]);
+       });
+       $("#site_parnalbundle_filmtype_realisateur").autocomplete({
+            source: function (request,callback) {
+                var donnee = { real : request.term };
+                $.ajax({
+                    url : "{{ path('film_ajax_rea') }}",
+                    dataType:"JSON",
+                    data: donnee,
+                    success: function(reponse) {
+                        var lesrealisateurs= new Array();
+                        for (var i=0; i<reponse.length;i++) lesrealisateurs[i]=reponse[i].realisateur;
+                        callback(lesrealisateurs);
+                    }    
+                });
+           }
+       }); 
+});
+</script>
+{{ tinymce_init() }}

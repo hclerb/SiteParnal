@@ -1,0 +1,30 @@
+<form action="{{ path('multiev_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button id="bpsup" type="submit">Mettre à jour</button>
+    </p>
+</form>
+<script type="text/javascript">
+$(function(){
+ $("#bpsup").button();
+ $("form").submit(function()
+   { 
+    var Data = $(this).serialize();
+         $.ajax({
+              url : "{{ path('multiev_update', { 'id': entity.id }) }}",
+              type:"POST",
+              datatype:"text",
+              data : Data,
+              success: function(reponse) {
+                       if (reponse==1) {
+                         $("#zonemulti").load("{{ path('multiev') }}"); 
+                       }
+                    }, 
+              error : function(reponse) {
+                      alert(reponse);
+              }
+          }); 
+          return false;
+   });
+});
+</script>

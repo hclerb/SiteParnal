@@ -1,0 +1,7 @@
+parameters:
+#    site_parnal.example.class: Site\ParnalBundle\Example
+
+services:
+#    site_parnal.example:
+#        class: %site_parnal.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

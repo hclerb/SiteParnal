@@ -1,0 +1,56 @@
+admin:
+    pattern: /admin/
+    defaults: { _controller: SiteParnalBundle:Admin:index }
+SiteParnalBundle_film:
+    resource: "routing/film.yml"
+    prefix:   /admin/film
+SiteParnalBundle_seance:
+    resource: "routing/seance.yml"
+    prefix:   /admin/seance  
+SiteParnalBundle_multiev:
+    resource: "routing/multiev.yml"
+    prefix:   /admin/multiev  
+SiteParnalBundle_cinedebat:
+    resource: "routing/cinedebat.yml"
+    prefix:   /admin/cinedebat
+SiteParnalBundle_image:
+    resource: "routing/image.yml"
+    prefix:   /admin/image
+SiteParnalBundle_intervenant:
+    resource: "routing/intervenant.yml"
+    prefix:   /admin/intervenant
+SiteParnalBundle_programme:
+    resource: "routing/programme.yml"
+    prefix:   /admin/programme
+SiteParnalBundle_annonce:
+    resource: "routing/annonce.yml"
+    prefix:   /admin/annonce 
+SiteParnalBundle_home:
+    pattern:  /
+    defaults: { _controller: SiteParnalBundle:Front:index }
+SiteParnalBundle_majhome:
+    pattern:  /maj
+    defaults: { _controller: SiteParnalBundle:Front:majindex }    
+SiteParnalBundle_affichedebat:
+    pattern:  /{id}/debat
+    defaults: { _controller: SiteParnalBundle:Front:debat }
+SiteParnalBundle_reste:
+    pattern:  /all
+    defaults: { _controller: SiteParnalBundle:Front:all }    
+SiteParnalBundle_bysemaine:
+    pattern:  /bysemaine/
+    defaults: { _controller: SiteParnalBundle:Front:bysemaine }
+    requirements: { _method: get }
+SiteParnalBundle_newemail:
+    pattern:  /newmail
+    defaults: { _controller: "SiteParnalBundle:Front:newmail" }
+SiteParnalBundle_email:
+    pattern:  /email/
+    defaults: { _controller: SiteParnalBundle:Front:envoimail }
+    requirements: { _method: post }
+SiteParnalBundle_telechaargement:
+    pattern:  /tele
+    defaults: { _controller: SiteParnalBundle:Front:telechargement }
+SiteParnalBundle_frontseance:
+    pattern:  /{id}/frontseance
+    defaults: { _controller: SiteParnalBundle:Front:thefilm }

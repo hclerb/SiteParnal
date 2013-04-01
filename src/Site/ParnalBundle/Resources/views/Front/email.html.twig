@@ -1,0 +1,19 @@
+<form id="formmail" action="{{ path('SiteParnalBundle_email') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+        <button type="submit" id="bpsub">Envoyer le mail</button>
+</form>
+</div>
+<script type="text/javascript">
+       var options = { 
+        type:           "POST",
+        clearForm:  true,
+        success: function() {
+            $("#dgecrire").dialog("close");
+          }
+        };
+     $("form").submit(function()
+     { 
+        $(this).ajaxSubmit(options); 
+        return false;   
+     }); 
+</script>

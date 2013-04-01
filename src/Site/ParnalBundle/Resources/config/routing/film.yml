@@ -1,0 +1,77 @@
+film:
+    pattern:  /
+    defaults: { _controller: "SiteParnalBundle:Film:index" }
+
+film_actif:
+    pattern:  /actif
+    defaults: { _controller: "SiteParnalBundle:Film:indexactif" }
+
+film_nactif:
+    pattern:  /nactif
+    defaults: { _controller: "SiteParnalBundle:Film:indexnactif" }
+
+film_nclasse:
+    pattern:  /indexnclasse
+    defaults: { _controller: "SiteParnalBundle:Film:indexnclasse" }
+    
+film_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SiteParnalBundle:Film:show" }
+
+film_new:
+    pattern:  /new
+    defaults: { _controller: "SiteParnalBundle:Film:new" }
+
+film_create:
+    pattern:  /create
+    defaults: { _controller: "SiteParnalBundle:Film:create" }
+    requirements: { _method: post }
+
+film_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SiteParnalBundle:Film:edit" }
+
+film_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SiteParnalBundle:Film:update" }
+    requirements: { _method: post }
+
+film_classement:
+    pattern:  /{id}/editssaff
+    defaults: { _controller: "SiteParnalBundle:Film:editssaff" }
+
+film_classement_update:
+    pattern:  /{id}/updatessaff
+    defaults: { _controller: "SiteParnalBundle:Film:updatessaff" }
+    requirements: { _method: post }
+
+film_cpltssaffiche:
+    pattern:  /{id}/editcpltssaff
+    defaults: { _controller: "SiteParnalBundle:Film:editcpltssaff" }
+
+film_cpltssaffiche_update:
+    pattern:  /{id}/updatecpltssaff
+    defaults: { _controller: "SiteParnalBundle:Film:updatecpltssaff" }
+    requirements: { _method: post }
+    
+film_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SiteParnalBundle:Film:delete" }
+    requirements: { _method: post }
+
+film_activer:
+    pattern:  /{id}/activer
+    defaults: { _controller: "SiteParnalBundle:Film:activer" }
+
+film_ranger:
+    pattern:  /{id}/ranger
+    defaults: { _controller: "SiteParnalBundle:Film:ranger" }
+
+film_rangertout:
+    pattern:  /rangertout
+    defaults: { _controller: "SiteParnalBundle:Film:rangertout" }  
+    
+film_ajax_rea:
+    pattern: /ajaxRea
+    defaults: { _controller: "SiteParnalBundle:Film:ajaxRea" }
+    requirements: { _method: get }

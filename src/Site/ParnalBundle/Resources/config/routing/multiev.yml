@@ -1,0 +1,29 @@
+multiev:
+    pattern:  /
+    defaults: { _controller: "SiteParnalBundle:MultiEv:index" }
+
+multiev_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SiteParnalBundle:MultiEv:show" }
+
+multiev_new:
+    pattern:  /new
+    defaults: { _controller: "SiteParnalBundle:MultiEv:new" }
+
+multiev_create:
+    pattern:  /create
+    defaults: { _controller: "SiteParnalBundle:MultiEv:create" }
+    requirements: { _method: post }
+
+multiev_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SiteParnalBundle:MultiEv:edit" }
+
+multiev_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SiteParnalBundle:MultiEv:update" }
+    requirements: { _method: post }
+
+multiev_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SiteParnalBundle:MultiEv:delete" }

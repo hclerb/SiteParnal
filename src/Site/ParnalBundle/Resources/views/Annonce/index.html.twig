@@ -1,0 +1,34 @@
+<table class="records_list">
+    <tbody>
+    {% for entity in entities %}
+        <tr id="tr{{ entity.id }}">
+            <td>{{ entity.lannonce|raw }}</td>
+            <td>{% if entity.debut %}{{ entity.debut|date('d-m-Y') }}{% endif%}</td>
+            <td></td>
+            <td>{% if entity.fin %}{{ entity.fin|date('d-m-Y') }}{% endif%}</td>
+            <td>
+                    <span class="Bpedit" chemin="{{ path('annonce_edit', { 'id': entity.id }) }}">Modifier</span>
+                    <span class="bpsup" chemin="{{ path('annonce_delete', { 'id': entity.id }) }}">Supprimer</span>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<script type="text/javascript">
+$(function(){
+  $(".Bpedit").button().click(function(event)
+   {
+     $("#zoneanno").load($(this).attr("chemin"));           
+   }); 
+  $(".bpsup").button().click(function(event)
+   {
+      $.ajax({
+              url : $(this).attr("chemin"),
+              success: function(reponse) {
+                       var chaine = "\"#tr" + reponse + "\"";
+                        $("tr").remove(chaine);
+                    }    
+                });
+   }); 
+});
+</script>

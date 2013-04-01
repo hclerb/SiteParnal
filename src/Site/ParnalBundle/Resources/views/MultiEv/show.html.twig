@@ -1,0 +1,43 @@
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+         <tr>
+            <th>Titre</th>
+            <td>{{ entity.titre }}</td>
+        </tr>
+        <tr>
+            <th>Pitch</th>
+            <td>{{ entity.pitch }}</td>
+        </tr>
+    </tbody>
+</table>
+<p id="Bpedit">edit</p>
+<form id="delete" action="{{ path('multiev_delete', { 'id': entity.id }) }}" method="post">
+   {{ form_widget(delete_form) }}
+   <button type="submit" id="Bpsup">Delete</button>
+</form>
+<script type="text/javascript">
+$(function(){
+  $("#Bpedit").button().click(function(event)
+   {
+     $("#zonemulti").load("{{ path('multiev_edit', { 'id': entity.id }) }}");           
+   }); 
+  $("form").submit(function()
+   {
+    var Data = $(this).serialize();
+     $.ajax({
+       url : "{{ path('multiev_delete', { 'id': entity.id }) }}",
+       type:"POST",
+       datatype:"text",
+       data : Data,       
+       success: function(reponse) {
+               $("#zonemulti").load("{{ path('multiev') }}");}
+     }); 
+     return false;
+   });
+  $("#Bpsup").button();
+});
+</script>

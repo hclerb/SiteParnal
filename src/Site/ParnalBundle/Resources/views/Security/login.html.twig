@@ -1,0 +1,12 @@
+{% extends "SiteParnalBundle::FbaseB.html.twig" %}
+
+{% block body %}
+<h1>L'authentification est Requise !</h1>
+
+<form action="{{ path('_security_check') }}" method="POST">
+    <input type="hidden" name="_target_path" value="/admin/" />
+    <input type="text" id="username" name="_username" value="" />
+    <input type="password" name="_password" />
+    <input type="submit" name="login" value="Sésame Ouvre toi !" />
+</form>
+{% endblock %}

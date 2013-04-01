@@ -1,0 +1,97 @@
+<html>
+    <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF8" />
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="favicon.ico" /><![endif]-->
+	<link rel="stylesheet" type="text/css" media="screen" href={{ asset('bundles/SiteParnal/css/front.css') }} />
+        <link rel="stylesheet" type="text/css" media="screen" href={{ asset('bundles/SiteParnal/themes/eggplant/jquery-ui-1.8.14.custom.css') }} />
+      <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery-1.7.2.min.js') }}"></script>
+      <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery-ui-1.8.16.custom.min.js') }}"></script>
+      <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery.form.js') }}"></script>
+      <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/slides.min.jquery.js') }}"></script>
+    </head>
+<body>
+  <div id="header">
+  <img id="logoid" src="{{ asset('bundles/SiteParnal/images/logo.png') }}"/>
+  <div id="barrebouton">
+  <button id="bpsem">Par Semaine</button>
+  <button id="bptout">Toute la prog</button>
+  <button id="bpprog">Téléchargez !</button>
+  {#<button id="bpnous">Tout sur nous</button>#}
+  </div>    
+  </div>
+  <div id="contenu">
+   {% block body %}        
+   {% endblock %}
+  </div>
+        <div id="dgecrire" title="Merçi de nous envoyer ces quelques mots...."></div>
+  <div id="footer">
+      <a href="http://www.cotecinema.fr" id="cote" TARGET="_blank">Coté Cinéma</a>
+      <a href="{{ path('SiteParnalBundle_home') }}" id="accueil">Accueil</a>
+      <a href="mailto:info@leparnal.net" id="ecrire">Nous écrire</a>
+     {# <span id="ecrire">Nous écrire</span> #}
+      <a href="http://www.festivalcinemino.org" id="mino" TARGET="_blank">Cinémino</a>
+      <a href="http://www.ilikecinema.com" id="ilike" TARGET="_blank">ILikeCinéma</a>
+      <a href="http://www.allocine.fr/seance/salle_gen_csalle=P7506.html" id="allo" TARGET="_blank">Allociné</a>
+  </div>
+  <script type="text/javascript">
+   $(function(){
+    $("#accueil").button().click(function(event){
+      $("#contenu").load("{{ path('SiteParnalBundle_majhome') }}");
+      $("#bpsem").button("enable");
+      $("#bptout").button("enable");
+      $("#bpprog").button("enable");
+   });
+    $("#mino").button();
+    $("#cote").button();
+    $("#allo").button();
+    $("#ilike").button();
+    $("#ecrire").button();
+    $("#bpsem").button().click(function(event){
+       var cejour = new Date();
+       var data="datedeb="+cejour.getFullYear()+'-'+(cejour.getMonth()+1)+'-'+cejour.getDate();
+       $.ajax({
+         url : "{{ path('SiteParnalBundle_bysemaine') }}",
+         type:"get",
+         datatype:"html",
+         data : data,
+         success: function(reponse) {
+                       $("#contenu").html(reponse);
+                       $("#bpsem").button("disable");
+                       $("#bptout").button("enable");
+                       $("#bpprog").button("enable")
+                    }, 
+         error : function(reponse) {
+                      alert(reponse);
+         }
+        });   
+         
+     }); 
+     $("#bptout").button().click(function(event)
+     {
+         $("#contenu").load("{{ path('SiteParnalBundle_reste') }}"); 
+         $("#bpsem").button("enable");
+         $("#bptout").button("disable");
+         $("#bpprog").button("enable")
+     }); 
+     $("#bpprog").button().click(function(event)
+     {
+         $("#contenu").load("{{ path('SiteParnalBundle_telechaargement') }}");
+         $("#bpsem").button("enable");
+         $("#bptout").button("enable");
+         $("#bpprog").button("disable");
+     }); 
+     $("#bpnous").button().click(function(event)
+     {
+         $("#contenu").load("{{ path('SiteParnalBundle_reste') }}");
+     });
+   });
+   $("#logoid").click(function(event){
+      $("#contenu").load("{{ path('SiteParnalBundle_majhome') }}");  
+      $("#bpsem").button("enable");
+      $("#bptout").button("enable");
+      $("#bpprog").button("enable");
+   });
+   </script>
+</body>
+</html>

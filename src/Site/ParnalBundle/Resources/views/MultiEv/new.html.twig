@@ -1,0 +1,32 @@
+<form action="{{ path('multiev_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button id="bpsup" type="submit">Ajouter</button>
+    </p>
+</form>
+<script type="text/javascript">
+$(function(){
+ $("#bpsup").button();
+ $("form").submit(function()
+   { 
+    var Data = $(this).serialize();
+         $.ajax({
+              url : "{{ path('multiev_create') }}",
+              type:"POST",
+              datatype:"text",
+              data : Data,
+              success: function(reponse) {
+                       if (reponse==1) {
+                        $("#site_parnalbundle_multievtype_titre").val("");
+                        $("#site_parnalbundle_multievtype_pitch").val("");
+                       }
+                    }, 
+              error : function(reponse) {
+                      alert(reponse);
+              }
+          }); 
+          return false;
+   }); 
+});
+</script>
+    

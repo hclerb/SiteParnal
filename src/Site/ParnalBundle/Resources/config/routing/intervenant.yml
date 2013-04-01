@@ -1,0 +1,34 @@
+intervenant:
+    pattern:  /
+    defaults: { _controller: "SiteParnalBundle:Intervenant:index" }
+
+intervenant_recup:
+    pattern:  /recup
+    defaults: { _controller: "SiteParnalBundle:Intervenant:recup" }  
+    
+intervenant_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SiteParnalBundle:Intervenant:show" }
+
+intervenant_new:
+    pattern:  /new
+    defaults: { _controller: "SiteParnalBundle:Intervenant:new" }
+
+intervenant_create:
+    pattern:  /create
+    defaults: { _controller: "SiteParnalBundle:Intervenant:create" }
+    requirements: { _method: post }
+
+intervenant_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SiteParnalBundle:Intervenant:edit" }
+
+intervenant_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SiteParnalBundle:Intervenant:update" }
+    requirements: { _method: post }
+
+intervenant_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SiteParnalBundle:Intervenant:delete" }
+    requirements: { _method: post }

@@ -1,0 +1,37 @@
+image:
+    pattern:  /
+    defaults: { _controller: "SiteParnalBundle:Image:index" }
+
+image_byfilm:
+    pattern:  /{id}/showwithfilm
+    defaults: { _controller: "SiteParnalBundle:Image:indexwithfilm" }
+
+image_newforfilm:
+    pattern:  /{id}/newforfilm
+    defaults: { _controller: "SiteParnalBundle:Image:newforfilm" }
+    
+image_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SiteParnalBundle:Image:show" }
+
+image_new:
+    pattern:  /new
+    defaults: { _controller: "SiteParnalBundle:Image:new" }
+
+image_create:
+    pattern:  /create
+    defaults: { _controller: "SiteParnalBundle:Image:create" }
+    requirements: { _method: post }
+
+image_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SiteParnalBundle:Image:edit" }
+
+image_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SiteParnalBundle:Image:update" }
+    requirements: { _method: post }
+
+image_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SiteParnalBundle:Image:delete" }

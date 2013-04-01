@@ -1,0 +1,50 @@
+<form id="seanceupdate" action="{{ path('seance_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit" id="bpedit">Modification</button>
+    </p>
+</form>
+<form id="delete" action="{{ path('seance_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit" id="bpsup">Delete</button>
+</form>
+
+<script type="text/javascript">
+$(function(){
+ $("#site_parnalbundle_seancetype_jour").datepicker();
+ $("#bpedit").button();
+ $("#bpsup").button();
+ $("#seanceupdate").submit(function()
+  { 
+    var Data = $(this).serialize();
+         $.ajax({
+              url : "{{ path('seance_update', { 'id': entity.id }) }}",
+              type:"POST",
+              datatype:"text",
+              data : Data,
+              success: function(reponse) {
+                       if (reponse==1) {
+                         $("#zoneseance").load("{{ path('seance_restante') }}"); 
+                       }
+                    }, 
+              error : function(reponse) {
+                      alert(reponse);
+              }
+          }); 
+          return false;
+   });
+  $("#delete").submit(function()
+   {
+    var Data = $(this).serialize();
+     $.ajax({
+       url : "{{ path('seance_delete', { 'id': entity.id }) }}",
+       type:"POST",
+       datatype:"text",
+       data : Data,       
+       success: function(reponse) {
+               $("#zoneseance").load("{{ path('seance_restante') }}");}
+     }); 
+     return false;
+   });
+});
+</script>

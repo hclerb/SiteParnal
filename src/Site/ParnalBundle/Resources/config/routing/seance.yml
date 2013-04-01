@@ -1,0 +1,51 @@
+seance:
+    pattern:  /
+    defaults: { _controller: "SiteParnalBundle:Seance:index" }
+
+seance_restante:
+    pattern:  /restant
+    defaults: { _controller: "SiteParnalBundle:Seance:indexrestant" }
+    
+seance_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SiteParnalBundle:Seance:show" }
+
+seance_new:
+    pattern:  /new
+    defaults: { _controller: "SiteParnalBundle:Seance:new" }
+
+seance_create:
+    pattern:  /create
+    defaults: { _controller: "SiteParnalBundle:Seance:create" }
+    requirements: { _method: post }
+
+seance_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SiteParnalBundle:Seance:edit" }
+
+seance_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SiteParnalBundle:Seance:update" }
+    requirements: { _method: post }
+
+seance_editentree:
+    pattern:  /{id}/editentree
+    defaults: { _controller: "SiteParnalBundle:Seance:editentree" }
+
+seance_updateentree:
+    pattern:  /{id}/updateentree
+    defaults: { _controller: "SiteParnalBundle:Seance:updateentree" }
+    requirements: { _method: post }
+
+seance_incomp:
+    pattern:  /indexincomp
+    defaults: { _controller: "SiteParnalBundle:Seance:indexincomp" }
+    
+seance_nowcinedebat:
+    pattern:  /{id}/nowcinedebat
+    defaults: { _controller: "SiteParnalBundle:Seance:nowcinedebat" }
+    
+seance_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SiteParnalBundle:Seance:delete" }
+    requirements: { _method: post }

@@ -1,0 +1,30 @@
+programme:
+    pattern:  /
+    defaults: { _controller: "SiteParnalBundle:Programme:index" }
+
+programme_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SiteParnalBundle:Programme:show" }
+
+programme_new:
+    pattern:  /new
+    defaults: { _controller: "SiteParnalBundle:Programme:new" }
+
+programme_create:
+    pattern:  /create
+    defaults: { _controller: "SiteParnalBundle:Programme:create" }
+    requirements: { _method: post }
+
+programme_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SiteParnalBundle:Programme:edit" }
+
+programme_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SiteParnalBundle:Programme:update" }
+    requirements: { _method: post }
+
+programme_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SiteParnalBundle:Programme:delete" }
+    requirements: { _method: post }

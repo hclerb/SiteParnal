@@ -1,0 +1,41 @@
+<form id="editinter" action="{{ path('intervenant_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button id="bpedit" type="submit">Enregistrer</button>
+    </p>
+</form>
+<form id="delete" action="{{ path('intervenant_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+</form>
+<script type="text/javascript">
+$(function(){
+  $("button").button();  
+  $("#delete").submit(function()
+   {
+    var Data = $(this).serialize();
+     $.ajax({
+       url : "{{ path('intervenant_delete', { 'id': entity.id }) }}",
+       type:"POST",
+       datatype:"text",
+       data : Data,       
+       success: function(reponse) {
+               $("#zoneseance").load("{{ path('intervenant') }}");}
+     }); 
+     return false;   
+   });
+   var options = { 
+        target:        '#zoneseance',
+        type:           "POST",
+        success: function() {
+            $("#zoneseance").load("{{ path('intervenant') }}");
+          }
+        };
+      $("#bpedit").button().click(function(event){
+         $("#editinter").ajaxSubmit(options); 
+         return false;     
+     });    
+ 
+ });
+</script>
+{{ tinymce_init() }}

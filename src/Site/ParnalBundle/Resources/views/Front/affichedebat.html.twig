@@ -1,0 +1,14 @@
+{# empty Twig template #}
+<h1>{{ entity.titre }}</h1>
+<h3>{{ entity.pitch|raw }}</h3>
+{% for intervenant in entity.lesintervenants %}
+<div class="Dgseance">
+    <div class="Dgaff">
+     <img src="{{asset('img_film/photosintervenant/')}}{{ intervenant.image }}" />
+    </div>
+    <div class="Dgresu">
+        <p>{{ intervenant.nom }}</p>
+        <p>{{ intervenant.pitch|raw }}</p>
+    </div>
+</div>
+{% endfor %}

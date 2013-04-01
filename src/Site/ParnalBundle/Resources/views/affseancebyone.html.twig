@@ -1,0 +1,124 @@
+{% block body %}
+<div class="row thebandeau">
+{% if not lesfilms[0] is defined %}
+  <div id="finprog">
+      <h1>Il n'y a plus de séances, nous sommes en fin de programmation....</h1>
+  </div>
+{% else %}
+{% if lesfilms[1] is defined %}
+ {% if lesfilms[6] is defined %}
+   <div id="bpdefilg">
+     <img src="{{ asset('img_film/gene/flgauche.png') }}" />
+   </div>
+ {% endif %}
+ {% for lefilm in lesfilms %}
+  {% if loop.index<7 %}
+    <div class="barrefilms">
+      <img id="aff{{ loop.index0 }}" class="affid" src="{{asset('img_film/affiches/')}}{{ lefilm.lefilm.image }}" chemin="{{ path('SiteParnalBundle_frontseance', { 'id': lefilm.lefilm.id }) }}"/>
+    </div>
+  {% endif %}
+ {% endfor %}
+ {% if lesfilms[6] is defined %}
+   <div id="bpdefild">
+    <img src="{{ asset('img_film/gene/fldroite.png') }}" />
+   </div>
+ {% endif %}
+{% endif %}
+</div>
+<div id="affichefilm"></div>
+{% endif %}
+{% endblock %}
+
+ <script type="text/javascript">
+     
+  var index=0;
+  var selectionne=0;
+  var lesaffiches = new Array();
+  var leschemins = new Array();
+  {% for lefilm in lesfilms %}
+      lesaffiches.push("{{asset('img_film/affiches/')}}{{ lefilm.lefilm.image }}");
+      leschemins.push("{{ path('SiteParnalBundle_frontseance', { 'id': lefilm.lefilm.id }) }}");
+  {% endfor %}
+  var indexmax=leschemins.length;
+  function razcadre()
+  {
+   for(var i=0; i<6 ; i++)
+    {
+     $("#aff"+i).removeClass("affidS"); 
+    }   
+  }
+  $(".cinedebat").button().click(function(event)
+    {
+      var chemin = $(this).attr("chemin");
+     $("#dgdebat").dialog({
+        show: "slide",
+        width : "864",
+        position: [$("#dgdebat").position().left+150,$("#dgdebat").position().top],
+        create : function(event){
+          $(".cinedebat").button("disable");  
+        },
+        beforeclose : function(event){
+           $(".cinedebat").button("enable");  
+        },
+        open : function (event)
+        {
+          $(this).load(chemin);    
+        },
+     });
+  });
+  $(".affid").click(function(event)
+  {
+      
+    $("#affichefilm").load($(this).attr("chemin"));   
+    razcadre();
+    $(this).addClass("affidS");
+    selectionne = eval( $(this).attr("id")[3] );
+  });
+  
+  
+  $("#bpdefild").click(function(event){
+      if (index < indexmax-5)
+      {
+        for(var i=0; i<6 ; i++)
+          {
+            $("#aff"+i).removeClass("affidS");  
+            $("#aff"+i).attr("src",lesaffiches[index+1+i]); 
+            $("#aff"+i).attr("chemin",leschemins[index+1+i]); 
+          }
+        index++;
+        $("#aff"+selectionne).addClass("affidS");
+        $("#affichefilm").load($("#aff"+selectionne).attr("chemin"));
+        
+        if (index==indexmax-6)$(this).css("visibility","hidden");
+        $("#bpdefilg").css("visibility","visible");
+      }
+          
+  });
+  
+   $("#bpdefilg").click(function(event){
+      if (index>0)
+       {
+         for(var i=0; i<6 ; i++)
+          {
+            $("#aff"+i).removeClass("affidS"); 
+            $("#aff"+i).attr("src",lesaffiches[index-1+i]); 
+            $("#aff"+i).attr("chemin",leschemins[index-1+i]); 
+          }
+         index--;
+         $("#affichefilm").load($("#aff"+selectionne).attr("chemin"));
+         $("#aff"+selectionne).addClass("affidS");
+
+         if(index==0)$("#bpdefilg").css("visibility","hidden");
+         $("#bpdefild").css("visibility","visible");
+       }
+  }); 
+  
+  
+ 
+  $(function(){
+   $("#affichefilm").load(leschemins[0]);
+   $("#bpdefilg").css("visibility","hidden");
+   $("#aff0").addClass("affidS");
+   index=0;
+  });
+ </script>

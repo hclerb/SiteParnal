@@ -1,0 +1,28 @@
+<table class="records_list">
+<tbody>
+    {% for entity in entities %}
+      {% if entity.id!= 0 %}
+        <tr id="tr{{ entity.id }}">
+            <td>{{ entity.titre }}</td>
+            <td>{{ entity.pitch }}</td>
+            <td>
+                <span class="Bpshow" chemin="{{ path('multiev_show', { 'id': entity.id }) }}">show</span>
+                <span class="Bpedit" chemin="{{ path('multiev_edit', { 'id': entity.id }) }}">edit</span>
+            </td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
+<script type="text/javascript">
+$(function(){
+  $(".Bpshow").button().click(function(event)
+   {
+    $("#zonemulti").load($(this).attr("chemin"));
+   }); 
+  $(".Bpedit").button().click(function(event)
+   {
+     $("#zonemulti").load($(this).attr("chemin"));           
+   });
+});
+</script>

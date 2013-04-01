@@ -1,0 +1,67 @@
+<form id="theform" action="{{ path('cinedebat_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <span id="add_intervenant">Ajouter un intervenant</span>
+        <button type="submit" id="bpsub">Création</button>
+    </p>
+</form>
+
+<div id="Creainter" title="Création d'un intervenant"></div>
+<script type="text/javascript">
+ $(function(){
+  $("#site_parnalbundle_cinedebattype_jour").datepicker();
+  $("#bpsub").button().click(function(event){
+    var Data = $("#theform").serialize();
+         $.ajax({
+              url : "{{ path('cinedebat_create') }}",
+              type:"POST",
+              datatype:"text",
+              data : Data,
+              success: function(reponse) {
+                       if(reponse==1){ 
+                          $("#site_parnalbundle_cinedebattype_titre").val("");
+                          $("#site_parnalbundle_cinedebattype_pitch").val("");
+                          $("#site_parnalbundle_cinedebattype_lesintervenants").val(0);
+                          }
+                       if(reponse==2) alert("Il y déjà une séance à cette heure là !");
+                    }, 
+                        
+              error : function(reponse) {
+                      alert(reponse);
+              }
+          }); 
+          return false;
+   });
+   $("#add_intervenant").button().click(function(event){
+   $("#Creainter").dialog({
+        width : "500",
+        modal : "true",
+        open : function (event)
+        {
+          $(this).load("{{ path('intervenant_new') }}");    
+        }, 
+        close : function (event)
+        {
+          $.ajax({
+              url : "{{ path('intervenant_recup') }}",
+              datatype:"json",
+              success: function(reponse) {
+                  var rep=jQuery.parseJSON(reponse)
+                  var txt = "";
+                  $.each(rep,function(index,value)
+                  {
+                      txt += "<option value=\"" + value.id +"\">" + value.nom + "</option>";
+                  });
+                  $("#site_parnalbundle_cinedebattype_lesintervenants").html(txt);
+                 }, 
+                        
+              error : function(reponse) {
+                      alert(reponse);
+              }
+          });
+        }
+    });
+   });
+});
+</script>
+{{ tinymce_init() }}

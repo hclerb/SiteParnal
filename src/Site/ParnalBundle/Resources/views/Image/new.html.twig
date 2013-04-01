@@ -1,0 +1,28 @@
+<form action="{{ path('image_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit" id="bpsub">Ajouter</button>
+    </p>
+</form>
+<script type="text/javascript">
+$(function(){
+     $("#bpsub").button();
+     var options = { 
+        type:           "POST",
+        success: function() {
+        fileField     = document.getElementById("site_parnalbundle_imagetype_image");
+        parentNod     = fileField.parentNode;
+        tmpForm        = document.createElement("form");
+        parentNod.replaceChild(tmpForm,fileField);
+        tmpForm.appendChild(fileField);
+        tmpForm.reset();
+        parentNod.replaceChild(fileField,tmpForm);
+          }
+        };
+     $("form").submit(function()
+     { 
+        $(this).ajaxSubmit(options); 
+        return false;   
+     }); 
+});
+</script>

@@ -1,0 +1,30 @@
+<form id="ajoutprog" action="{{ path('programme_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+        <button type="submit" id="bpsub">Ajouter le document</button>
+</form>
+
+<script type="text/javascript">
+$(function(){
+      $("#bpsub").button();
+      $("#site_parnalbundle_programmetype_finaffichage").datepicker();
+      var options = { 
+        type:           "POST",
+        success: function() {
+               $("#resume").val("");
+               $("#site_parnalbundle_programmetype_presentation").val("");
+               fileField     = document.getElementById("site_parnalbundle_programmetype_fichier");
+               parentNod     = fileField.parentNode;
+               tmpForm        = document.createElement("form");
+               parentNod.replaceChild(tmpForm,fileField);
+               tmpForm.appendChild(fileField);
+               tmpForm.reset();
+               parentNod.replaceChild(fileField,tmpForm);
+          }
+        };
+      $("#bpsub").button().click(function(event){
+         $("#ajoutprog").ajaxSubmit(options); 
+         return false;     
+     });
+ });
+</script>
+{{ tinymce_init() }}

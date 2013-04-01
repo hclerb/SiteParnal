@@ -1,0 +1,52 @@
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Presentation</th>
+            <td>{{ entity.presentation }}</td>
+        </tr>
+        <tr>
+            <th>Fichier</th>
+            <td>{{ entity.fichier }}</td>
+        </tr>
+        <tr>
+            <th>Finaffichage</th>
+            <td>{{ entity.finaffichage|date('Y-m-d') }}</td>
+        </tr>
+    </tbody>
+</table>
+<p id="Bpedit">edit</p>
+<form id="delete" action="{{ path('programme_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit" id="bpsup">Delete</button>
+</form>
+
+<script type="text/javascript">
+$(function(){
+  $("#Bpedit").button().click(function(event)
+   {
+     $("#zonetele").load("{{ path('programme_edit', { 'id': entity.id }) }}");           
+   }); 
+  $("#bpsup").button();
+  $("form").submit(function()
+   {
+    var Data = $(this).serialize();
+     $.ajax({
+       url : "{{ path('programme_delete', { 'id': entity.id }) }}",
+       type:"POST",
+       datatype:"text",
+       data : Data,       
+       success: function(reponse) {
+               $("#zonetele").load("{{ path('programme') }}");
+           },
+       error: function(reponse){
+        alert("Suppression impossible, vérifiez la base de données"); 
+        }
+     }); 
+     return false;
+   });
+});
+</script>

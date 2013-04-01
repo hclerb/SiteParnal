@@ -1,0 +1,116 @@
+{% set inter = [12,16,18] %}
+{% set conseille = ["Adultes","Adultes et Adolescents","Adolescents","à voir en famille", "Jeune Public"] %}
+{% block body %}
+{% if not lesseances[0] is defined %}
+  <div class=row id="finprog">
+      <h1>Il n'y a plus de séances pour cette semaine </br>ou nous sommes en fin de programmation....</h1>
+  </div>
+ {% else %}
+   <div class="row lesfilms">
+    <div class="span3 horaire">
+        <table id="tableho" class="table table-bordered">
+            {% for laseance in lesseances %}
+              <tr>
+               <td id="td{{ loop.index0 }}" class="jour{{ laseance.jour|date('w') }}">
+                <span {% if laseance.relief !=0 or laseance.vo !=0 %}class="seancespe"{% endif %}>
+                  {{ lejour[laseance.jour|date('w')] }}
+                  {{ laseance.jour|date(' d ') }}
+                  {{ mois[laseance.jour|date('n')] }}
+                  {{ laseance.jour|date('H:i') }} 
+                </span>
+                {% if laseance.titre is defined %}<i class="icon-black icon-flag"></i>{% endif %}</br>
+
+                <span {% if laseance.relief !=0 or laseance.vo !=0 or laseance.titre is defined %}class="seancespe"{% endif %}>
+                <h4>{{ laseance.lefilm.titre }}
+                {% if laseance.vo !=0 %}VOST{% endif %}
+                {% if laseance.relief !=0 %}3D{% endif %}
+                </span>
+                </h4>
+               </td>
+              </tr>
+            {% endfor %}
+       </table>
+    </div>
+     {% for laseance in lesseances %}
+       <div class='span9 Fmasque' id="film{{ loop.index0 }}">
+        <div class='row Fresu'>
+            <div class='span7'>
+                <h1>{{ laseance.lefilm.titre }}</h1>
+                <h2>Réalisation : {{ laseance.lefilm.realisateur }}</h2>
+                <h3>{{ laseance.lefilm.duree }}</h3>
+                <h4>{{ laseance.lefilm.acteurs }}</h4>
+                {% if laseance.lefilm.interdiction >0 %}
+                    <h4 class='interdiction'>Interdiction aux moins de {{ inter[laseance.lefilm.interdiction - 1] }}ans</h4>
+                {%endif %}
+                {% if laseance.lefilm.conseille >0 %}
+                    <h4 class='conseille'>Film {{ conseille[laseance.lefilm.conseille - 1] }}</h4>
+                {%endif %}
+            </div>
+            <div class='span2'>
+                <img src="{{asset('img_film/affiches/')}}{{ laseance.lefilm.image }}" />
+                <p>source {{ laseance.lefilm.sourceimage }}</p>
+            </div>
+        </div>
+        <div class='row resu'>
+            {{ laseance.lefilm.synopsis|raw }}
+            {{ laseance.lefilm.critique|raw }}
+        </div>
+        <div class="row main_photo">
+          {% for lesblocsphotos in lesphotos %}
+            {% for laphoto in lesblocsphotos %} 
+              {% if laphoto.id==laseance.lefilm.id %}
+                <div class="span4 photos">
+                  <img src="{{asset('img_film/photos/')}}{{ laphoto[0].image }}" />
+                </div>
+              {%endif %}
+             {% endfor %}
+             {% set i=0 %}
+            {% endfor %}       
+        </div>
+        {% if laseance.titre is defined %}
+           <div class="row seancedebat">
+               <div class="row cinedebat">
+                   <div class="span9">
+                       <h1> Ciné-Rencontre </h1>
+                       <h2>{{ laseance.titre }}</h2>
+                       {{ laseance.pitch|raw }}
+                   </div>
+               </div>
+               <div class="row intervenant">
+                     {% for lintervenant in laseance.lesintervenants %} 
+                       <div class="span2">
+                         <img src="{{asset('img_film/photosintervenant/')}}{{ lintervenant.image }}" />
+                       </div>
+                       <div class="span7">
+                         <h1>{{ lintervenant.nom }}</h1>
+                         {{ lintervenant.pitch|raw }}
+                       </div>                       
+
+                     {% endfor %}
+               </div>
+              </div>
+        {% endif %}
+     </div>          
+     {% endfor %} 
+  </div>
+{% endif %}
+{% endblock %}
+ <script type="text/javascript">
+  $("#film0").removeClass('Fmasque').addClass('FVisible');
+  $("#td0").css({"background-color": "rgb(145, 163, 163)"});
+  function masquefilms()
+  {
+   for(i=0; i<{{ lesseances|length }};i++){
+    $("#film"+i).removeClass('FVisible').addClass('Fmasque');   
+   }
+  }
+  $("td").hover(function(){
+      $("td").css({"background-color": ""});
+      $(this).css({"background-color": "rgb(145, 163, 163)"});
+      var numligne=this.id;
+      numligne = numligne.replace("td","");
+      masquefilms();
+      $("#film"+numligne).removeClass('Fmasque').addClass('FVisible');
+  });
+
+ </script>

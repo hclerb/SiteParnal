@@ -1,0 +1,30 @@
+<form action="{{ path('seance_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit" id="bpsub">Création</button>
+    </p>
+</form>
+<script type="text/javascript">
+ $(function(){
+  $("#site_parnalbundle_seancetype_jour").datepicker();
+  $("#bpsub").button();
+  $("form").submit(function()
+   { 
+    var Data = $(this).serialize();
+         $.ajax({
+              url : "{{ path('seance_create') }}",
+              type:"POST",
+              datatype:"text",
+              data : Data,
+              success: function(reponse) {
+                       if(reponse==1) $("#site_parnalbundle_seancetype_jour").val("");
+                       if(reponse==2) alert("Il y déjà une séance à cette heure là !");
+                    }, 
+              error : function(reponse) {
+                      alert(reponse);
+              }
+          }); 
+          return false;
+   });
+ });
+</script>

@@ -1,0 +1,36 @@
+{% set mois = ['','janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'] %}
+{% set lejour = ['Dimanche','Lundi', 'Mardi','Mercredi','Jeudi','Vendredi','Samedi'] %}
+<table class="records_list">
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ jour[entity.jour|date('n')] }} {{ entity.jour|date('d') }} {{ mois[entity.jour|date('n')] }} {{ entity.jour|date('Y') }}</td>
+            <td>à {{ entity.jour|date('H:i') }}</td>
+            <td>{{ entity.titre }}</td>
+            <td>{{ entity.pitch|raw  }}</td>
+            <td>{{ entity.lefilm.titre }}</td>
+            <td>de {{ entity.lefilm.realisateur }}</td>
+            <td>{% if entity.lemulti.id !=0 %}  {{ entity.lemulti.titre }}{% endif %}
+            </td>           
+            <td>
+                <span class="Bpshow" chemin="{{ path('cinedebat_show', { 'id': entity.id }) }}">show</span>
+                <span class="Bpedit" chemin="{{ path('cinedebat_edit', { 'id': entity.id }) }}">edit</span>
+                <span class="Bpintervenant" chemin="{{ path('intervenant_byseance', { 'id': entity.id }) }}">Voir intervenant</span>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<script type="text/javascript">
+$(function(){
+  $(".Bpshow").button().click(function(event)
+   {
+    $("#zonedebat").load($(this).attr("chemin"));
+   }); 
+  $(".Bpedit").button().click(function(event)
+   {
+     $("#zonedebat").load($(this).attr("chemin"));           
+   }); 
+  $(".Bpintervenant").button();
+});
+</script>

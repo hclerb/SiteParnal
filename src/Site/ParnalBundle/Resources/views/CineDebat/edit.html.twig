@@ -1,0 +1,44 @@
+<form id="debatupdate" action="{{ path('cinedebat_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+        <button type="submit" id="bpedit">Modification</button>
+</form>
+<form id="delete" action="{{ path('cinedebat_delete', { 'id': entity.id }) }}" method="post">
+     {{ form_widget(delete_form) }}
+     <button type="submit" id="bpsup">Suppression</button>
+</form>
+<script type="text/javascript">
+$(function(){
+ $("#site_parnalbundle_cinedebattype_jour").datepicker();
+ $("#bpedit").button().click(function(event){ 
+     var Data = $("#debatupdate").serialize();
+         $.ajax({
+              url : "{{ path('cinedebat_update', { 'id': entity.id }) }}",
+              type:"POST",
+              datatype:"text",
+              data : Data,
+              success: function(reponse) {
+                       if (reponse==1) {
+                         $("#zoneseance").load("{{ path('seance_restante') }}"); 
+                       }
+                    }, 
+              error : function(reponse) {
+                      alert(reponse);
+              }
+          }); 
+          return false;
+   });
+ $("#bpsup").button().click(function(event){
+    var Data = $("#delete").serialize();
+     $.ajax({
+       url : "{{ path('cinedebat_delete', { 'id': entity.id }) }}",
+       type:"POST",
+       datatype:"text",
+       data : Data,       
+       success: function(reponse) {
+               $("#zoneseance").load("{{ path('seance_restante') }}");}
+     }); 
+     return false;   
+   });
+});
+</script>
+{{ tinymce_init() }}

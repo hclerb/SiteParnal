@@ -1,0 +1,78 @@
+div label {
+    display: block;
+    float: left;
+    width: 131px;
+}
+form input {
+    width: 789px;
+}
+#bpsub {
+    margin: 40px 0 10px 60px;
+}
+form {
+    border: medium solid;
+    width: 967px;
+}
+form div {
+    margin: 10px 10px 1px;
+}
+#formfilm {
+    float: left;
+    margin: 25px 0 0 20px;
+}
+#retour {
+    clear: left;
+}
+.Fpg {
+    float: left;
+    margin: 25px 0 20px 20px;
+}
+.Fresu {
+    float: left;
+    margin: 0 0 20px 20px;
+}
+.Fimage {
+    clear: left;
+}
+#delete {
+    border: medium none;
+}
+.actif {
+    color: green;
+}
+.inactif {
+    color: red;
+}
+#resumed {
+    border: medium solid;
+    float: left;
+    margin: 100px 0 0;
+}
+#resumed p {
+    padding: 0 20px;
+}
+#resumed textArea {
+    border: medium dotted;
+    height: 1000px;
+    margin: 0;
+    padding: 0 20px 20px;
+    width: 700px;
+}
+#boutondep {
+    float: left;
+    margin: 600px 75px 50px;
+}
+#site_parnalbundle_seanceentreetype label {
+    display: block;
+    float: left;
+    margin: 6px 0;
+    width: 148px;
+}
+#site_parnalbundle_seanceentreetype input {
+    margin: 3px;
+    width: 100px;
+}
+th {
+    text-align: right;
+    padding-right: 5px;
+}

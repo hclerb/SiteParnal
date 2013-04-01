@@ -1,0 +1,40 @@
+{% set mois = [' ','janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'] %}
+{% set lejour = ['Dimanche','Lundi', 'Mardi','Mercredi','Jeudi','Vendredi','Samedi'] %}
+<div class="row" id="barredate">
+    <div class="span3"><button type="button" class="btn btn-parnal btn-large btn-block" id="semainepre"><i class="icon-white icon-fast-backward"></i> semaine précédente</button></div>
+    <div class="span6"><h4>{{ lejour[deb|date('w')] }} {{ deb|date(' d ') }} {{ mois[deb|date('n')] }}  ..........  {{ lejour[fin|date('w')] }} {{ fin|date(' d ') }} {{ mois[fin|date('n')] }}</h4></div>
+    <div class="span3"><button type="button" class="btn btn-parnal btn-large btn-block" id="semainesuiv">semaine suivante <i class="icon-white icon-fast-forward"></i></button></div>
+</div>
+{% include "SiteParnalBundle::affseance.html.twig" %}
+  <script type="text/javascript">
+    $("#semainepre").button().click(function(event){
+       var cejour = new Date();
+       cejour.setDate({{  deb|date(' d ') }});
+       cejour.setMonth({{ deb|date('n') }});
+       cejour.setDate(cejour.getDate()-1);
+       var data="datedeb="+cejour.getFullYear()+'-'+(cejour.getMonth())+'-'+cejour.getDate(); 
+       go(data)
+    });
+    $("#semainesuiv").button().click(function(event){
+       var cejour = new Date();
+       cejour.setDate({{  fin|date(' d ') }});
+       cejour.setMonth({{ fin|date('n') }});
+       cejour.setDate(cejour.getDate()+1);
+       var data="datedeb="+cejour.getFullYear()+'-'+(cejour.getMonth())+'-'+cejour.getDate();
+       go(data);
+     });
+     function go(data){
+       $.ajax({
+         url : "{{ path('SiteParnalBundle_bysemaine') }}",
+         type:"get",
+         datatype:"html",
+         data : data,
+         success: function(reponse) {
+                       $("#contenu").html(reponse);
+                    }, 
+         error : function(reponse) {
+                      alert(reponse);
+         }
+        });
+       };
+  </script>

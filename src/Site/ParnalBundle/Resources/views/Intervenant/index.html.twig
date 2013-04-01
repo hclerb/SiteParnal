@@ -1,0 +1,27 @@
+<table class="records_list">
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><img src="{{asset('img_film/photosintervenant/')}}{{entity.image}}" /></td>
+            <td>{{ entity.nom }}</td>
+            <td>{{ entity.pitch|raw }}</td>
+            <td>
+                <span class="Bpshow" chemin="{{ path('intervenant_show', { 'id': entity.id }) }}">show</span>
+                <span class="Bpedit" chemin="{{ path('intervenant_edit', { 'id': entity.id }) }}">edit</span>                
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<script type="text/javascript">
+$(function(){
+  $(".Bpshow").button().click(function(event)
+   {
+    $("#zoneseance").load($(this).attr("chemin"));
+   }); 
+  $(".Bpedit").button().click(function(event)
+   {
+     $("#zoneseance").load($(this).attr("chemin"));           
+   }); 
+});
+</script>

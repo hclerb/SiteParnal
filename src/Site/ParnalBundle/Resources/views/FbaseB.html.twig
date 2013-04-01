@@ -1,0 +1,12 @@
+{% extends "SiteParnalBundle::Fbase.html.twig" %}
+
+{% block stylesheets %}
+    {% stylesheets %}
+        <link rel="stylesheet" type="text/css" media="screen" href={{ asset('bundles/SiteParnal/themes/cupertino/jquery-ui-1.8.14.custom') }} />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+      <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery-1.7.2.js') }}"></script>
+      <script type="text/javascript" src="{{ asset('bundles/SiteParnal/js/jquery-ui-1.8.16.custom.min.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "SiteParnalBundle::base.html.twig" %}
+
+{% block body %}
+    <script type="text/javascript">
+        $("#tabs").tabs({
+         select: function(event, ui) { 
+             switch (ui.index){
+                 case (0):
+                    break;
+                 case (1):$("#zonefilm").load("{{ path('film') }}");
+                     break;
+                 case (2):$("#zoneseance").load("{{ path('seance_restante') }}");
+                     break;          
+                 case (3):$("#zonemulti").load("{{ path('multiev') }}"); 
+                     break;
+                 case (4) :$("#zonetele").load("{{ path('programme') }}"); 
+                     break;
+                }
+            }   
+          });
+    </script>
+{% endblock %}

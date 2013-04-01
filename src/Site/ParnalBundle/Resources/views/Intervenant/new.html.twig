@@ -1,0 +1,30 @@
+<form id="ajoutinter" action="{{ path('intervenant_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button id="but" type="submit">Ajouter</button>
+    </p>
+</form>
+<script type="text/javascript">
+$(function() {     
+    $("#but").button();
+     var options = { 
+        type:    "POST",
+        success: function() {
+               $("#site_parnalbundle_intervenanttype_nom").val("");
+               $("#site_parnalbundle_intervenanttype_pitch").val("");
+               fileField     = document.getElementById("site_parnalbundle_intervenanttype_image");
+               parentNod     = fileField.parentNode;
+               tmpForm        = document.createElement("form");
+               parentNod.replaceChild(tmpForm,fileField);
+               tmpForm.appendChild(fileField);
+               tmpForm.reset();
+               parentNod.replaceChild(fileField,tmpForm);
+          }
+        };
+     $("#but").button().click(function(event){
+         $("#ajoutinter").ajaxSubmit(options); 
+         return false;     
+     });
+});
+</script>
+{{ tinymce_init() }}

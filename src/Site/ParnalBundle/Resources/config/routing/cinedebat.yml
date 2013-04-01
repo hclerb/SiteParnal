@@ -1,0 +1,34 @@
+cinedebat:
+    pattern:  /
+    defaults: { _controller: "SiteParnalBundle:CineDebat:index" }
+  
+cinedebat_restant:
+    pattern:  /restant
+    defaults: { _controller: "SiteParnalBundle:CineDebat:indexrestant" }    
+
+cinedebat_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "SiteParnalBundle:CineDebat:show" }
+
+cinedebat_new:
+    pattern:  /new
+    defaults: { _controller: "SiteParnalBundle:CineDebat:new" }
+
+cinedebat_create:
+    pattern:  /create
+    defaults: { _controller: "SiteParnalBundle:CineDebat:create" }
+    requirements: { _method: post }
+
+cinedebat_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "SiteParnalBundle:CineDebat:edit" }
+
+cinedebat_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "SiteParnalBundle:CineDebat:update" }
+    requirements: { _method: post }
+
+cinedebat_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "SiteParnalBundle:CineDebat:delete" }
+    requirements: { _method: post }

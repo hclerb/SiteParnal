@@ -1,0 +1,38 @@
+<form id="theform" action="{{ path('annonce_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit" id="bpsub">Ajouter</button>
+    </p>
+</form>
+<script type="text/javascript">
+ $(function(){
+  $("#site_parnalbundle_annoncetype_debut").datepicker();
+    $("#site_parnalbundle_annoncetype_fin").datepicker();
+  $("#bpsub").button();
+  $("#bpsub").button().click(function(event){ 
+    var Data = $("#theform").serialize();
+         $.ajax({
+              url : "{{ path('annonce_create') }}",
+              type:"POST",
+              datatype:"text",
+              data : Data,
+              success: function(reponse) {
+                       if(reponse==1) 
+                        {   
+                           $("#site_parnalbundle_annoncetype_debut").val("");
+                           $("#site_parnalbundle_annoncetype_fin").val("");
+                           $("#site_parnalbundle_annoncetype_lannonce").val("");
+                        }
+                       else if(reponse==2) alert("Il y déjà une annonce dans ce créneau là !");
+                        else if(reponse==3) alert("Incompabilité date début et date de fin ! ");
+                    }, 
+              error : function(reponse) {
+                      alert(reponse);
+              }
+          }); 
+          return false;
+   });
+ });
+</script>
+
+{{ tinymce_init() }}

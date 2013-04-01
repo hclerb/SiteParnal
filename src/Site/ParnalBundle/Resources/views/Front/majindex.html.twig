@@ -1,0 +1,10 @@
+{% set mois = [' ','janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'] %}
+{% set lejour = ['Dimanche','Lundi', 'Mardi','Mercredi','Jeudi','Vendredi','Samedi'] %}
+{% block body %}
+   <div class="row">
+        {% if lannonce[0] is defined %}<div id="h1titre"> {{ lannonce[0].lannonce|raw }}</div>
+            {% else %} <h1 id="h1titre">Cette semaine au cinéma Le Parnal....</h1>
+        {% endif %}
+   </div>
+{% include "SiteParnalBundle::affseance.html.twig" %}
+{% endblock %}

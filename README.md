@@ -1,4 +1,1 @@
-SiteParnal
-==========
-
-Site en symfony2.2
+Site du cinéma le parnal en Symfony 2.2

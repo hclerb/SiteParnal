@@ -6,8 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Site\ParnalBundle\Entity\Film;
 use Site\ParnalBundle\Form\FilmType;
-use Site\ParnalBundle\Form\FilmssafficheType;
-use Site\ParnalBundle\Form\FilmcpltssafficheType;
+use Site\ParnalBundle\Form\FilmCreateType;
 
 /**
  * Film controller.
@@ -109,7 +108,7 @@ class FilmController extends Controller
         $entity = new Film();
         $entity->setDateSortie(new \DateTime());
         $entity->setSourceimage("Coté Cinéma");
-        $form   = $this->createForm(new FilmType(), $entity);
+        $form   = $this->createForm(new FilmCreateType(), $entity);
 
         return $this->render('SiteParnalBundle:Film:new.html.twig', array(
             'entity' => $entity,
@@ -125,7 +124,7 @@ class FilmController extends Controller
     {
         $entity  = new Film();
         $request = $this->getRequest();
-        $form    = $this->createForm(new FilmType(), $entity);
+        $form    = $this->createForm(new FilmCreateType(), $entity);
         $entity->setActif(TRUE);
         $form->bindRequest($request);
         if ($form->isValid()) {
@@ -188,7 +187,7 @@ class FilmController extends Controller
         $editForm->bindRequest($request);
 
         if ($editForm->isValid()) {
-            $this->modifTailleAffiche($entity);            
+            if ($entity->getFile()!=NULL) $this->modifTailleAffiche($entity);            
             $em->persist($entity);
             $em->flush();
             $response = new \Symfony\Component\HttpFoundation\Response();
@@ -203,124 +202,6 @@ class FilmController extends Controller
         ));
     }
     
-    /**
-     * Displays a form to edit an existing Film entity.
-     *
-     */
-    public function editssaffAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('SiteParnalBundle:Film')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Film entity.');
-        }
-        $editForm = $this->createForm(new FilmssafficheType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('SiteParnalBundle:Film:editssaff.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Edits an existing Film entity.
-     *
-     */
-    public function updatessaffAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('SiteParnalBundle:Film')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Film entity.');
-        }
-
-        $editForm   = $this->createForm(new FilmssafficheType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid()) {         
-            $em->persist($entity);
-            $em->flush();
-            $response = new \Symfony\Component\HttpFoundation\Response();
-            $response->setContent("{ reponse : 1}");
-            return $response; 
-        }
-
-        return $this->render('SiteParnalBundle:Film:editssaff.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-    
-    /**
-     * Displays a form to edit an existing Film entity.
-     *
-     */
-    public function editcpltssaffAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('SiteParnalBundle:Film')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Film entity.');
-        }
-        $editForm = $this->createForm(new FilmcpltssafficheType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('SiteParnalBundle:Film:editcpltssaff.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Edits an existing Film entity.
-     *
-     */
-    public function updatecpltssaffAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('SiteParnalBundle:Film')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Film entity.');
-        }
-
-        $editForm   = $this->createForm(new FilmcpltssafficheType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid()) {         
-            $em->persist($entity);
-            $em->flush();
-            $response = new \Symfony\Component\HttpFoundation\Response();
-            $response->setContent("{ reponse : 1}");
-            return $response; 
-        }
-
-        return $this->render('SiteParnalBundle:Film:editcpltssaff.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
     /**
      * Deletes a Film entity.
      *
@@ -435,7 +316,7 @@ class FilmController extends Controller
         $width = 151;
         $heightf = 201;
 
-        $filename = $entity->getImage();
+        $filename = $entity->getFile();
         list($width_orig, $height_orig) = getimagesize($filename);
 
         

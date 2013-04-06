@@ -91,7 +91,6 @@
     </tbody>
 </table>
 <p id="Bpedit">Edit</p>
-<span id="Bpeditssaff">Edit ss affiche</span>
 <form id="delete" action="{{ path('film_delete', { 'id': entity.id }) }}" method="post">
             {{ form_widget(delete_form) }}
             <button type="submit" id="bpsup">Delete</button>
@@ -101,10 +100,6 @@
   $("#Bpedit").button().click(function(event)
    {
      $("#zonefilm").load("{{ path('film_edit', { 'id': entity.id }) }}");           
-   }); 
-  $("#Bpeditssaff").button().click(function(event)
-   {
-     $("#zonefilm").load("{{ path('film_cpltssaffiche', { 'id': entity.id }) }}");           
    }); 
 $("#bpsup").button().click(function(event){
     var Data = $("#delete").serialize();

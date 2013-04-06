@@ -16,8 +16,6 @@
             <td>
                 <span class="Bp" chemin="{{ path('film_show', { 'id': entity.id }) }}">show</span>
                 <span class="Bp" chemin="{{ path('film_edit', { 'id': entity.id }) }}">edit</span>
-                <span class="Bp" chemin="{{ path('film_cpltssaffiche', { 'id': entity.id }) }}">edit ss affiche</span>
-                <span class="Bp" chemin="{{ path('film_classement', { 'id': entity.id }) }}">Classement</span>
                 {% if entity.actif==0 %}
                   <span class="Bp" chemin="{{ path('film_activer', { 'id': entity.id }) }}">Activer</span>
                 {% else %}

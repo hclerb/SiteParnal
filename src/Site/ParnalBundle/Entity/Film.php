@@ -151,6 +151,8 @@ class Film
     private $sourceimage;
 
     
+    private $file;
+    
     public function __toString() {
         return $this->titre . ' - ' . $this->realisateur;
     }
@@ -524,4 +526,17 @@ class Film
     {
         return $this->sourceimage;
     }
+    
+    
+// gestion fichier    
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
 }

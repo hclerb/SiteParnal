@@ -35,25 +35,7 @@ film_update:
     pattern:  /{id}/update
     defaults: { _controller: "SiteParnalBundle:Film:update" }
     requirements: { _method: post }
-
-film_classement:
-    pattern:  /{id}/editssaff
-    defaults: { _controller: "SiteParnalBundle:Film:editssaff" }
-
-film_classement_update:
-    pattern:  /{id}/updatessaff
-    defaults: { _controller: "SiteParnalBundle:Film:updatessaff" }
-    requirements: { _method: post }
-
-film_cpltssaffiche:
-    pattern:  /{id}/editcpltssaff
-    defaults: { _controller: "SiteParnalBundle:Film:editcpltssaff" }
-
-film_cpltssaffiche_update:
-    pattern:  /{id}/updatecpltssaff
-    defaults: { _controller: "SiteParnalBundle:Film:updatecpltssaff" }
-    requirements: { _method: post }
-    
+  
 film_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "SiteParnalBundle:Film:delete" }

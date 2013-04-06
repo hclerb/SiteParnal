@@ -18,13 +18,13 @@
         type:           "POST",
         success: function() {
                $("#resume").val("");
-               $("#site_parnalbundle_filmtype_titre").val("");
-               $("#site_parnalbundle_filmtype_realisateur").val("");
-               $("#site_parnalbundle_filmtype_duree").val("");
-               $("#site_parnalbundle_filmtype_acteurs").val("");
-               $("#site_parnalbundle_filmtype_synopsis").val("");
-               $("#site_parnalbundle_filmtype_critique").val("");
-               fileField     = document.getElementById("site_parnalbundle_filmtype_image");
+               $("#site_parnalbundle_filmcreatetype_titre").val("");
+               $("#site_parnalbundle_filmcreatetype_realisateur").val("");
+               $("#site_parnalbundle_filmcreatetype_duree").val("");
+               $("#site_parnalbundle_filmcreatetype_acteurs").val("");
+               $("#site_parnalbundle_filmcreatetype_synopsis").val("");
+               $("#site_parnalbundle_filmcreatetype_critique").val("");
+               fileField     = document.getElementById("site_parnalbundle_filmcreatetype_file");
                parentNod     = fileField.parentNode;
                tmpForm        = document.createElement("form");
                parentNod.replaceChild(tmpForm,fileField);
@@ -37,19 +37,19 @@
          $("#formfilm").ajaxSubmit(options); 
          return false;     
      });
-      $("#site_parnalbundle_filmtype_date_sortie").datepicker();
+      $("#site_parnalbundle_filmcreatetype_date_sortie").datepicker();
       $("#boutondep").button().click(function(event)
        {// traitement du texte à déployer
           var chaine = $("#resume").val();
           var elem = chaine.split("\n");
-               $("#site_parnalbundle_filmtype_titre").val(elem[0]);
-               $("#site_parnalbundle_filmtype_realisateur").val(elem[1]);
-               $("#site_parnalbundle_filmtype_duree").val(elem[2]);
-               $("#site_parnalbundle_filmtype_acteurs").val(elem[3]);
-               $("#site_parnalbundle_filmtype_synopsis").val(elem[4]);
-               $("#site_parnalbundle_filmtype_critique").val(elem[5]);
+               $("#site_parnalbundle_filmcreatetype_titre").val(elem[0]);
+               $("#site_parnalbundle_filmcreatetype_realisateur").val(elem[1]);
+               $("#site_parnalbundle_filmcreatetype_duree").val(elem[2]);
+               $("#site_parnalbundle_filmcreatetype_acteurs").val(elem[3]);
+               $("#site_parnalbundle_filmcreatetype_synopsis").val(elem[4]);
+               $("#site_parnalbundle_filmcreatetype_critique").val(elem[5]);
        });
-       $("#site_parnalbundle_filmtype_realisateur").autocomplete({
+       $("#site_parnalbundle_filmcreatetype_realisateur").autocomplete({
             source: function (request,callback) {
                 var donnee = { real : request.term };
                 $.ajax({

@@ -100,9 +100,9 @@
   $("#td0").css({"background-color": "rgb(145, 163, 163)"});
   function masquefilms()
   {
-   for(i=0; i<{{ lesseances|length }};i++){
-    $("#film"+i).removeClass('FVisible').addClass('Fmasque');   
-   }
+    for(i=0; i < {{ lesseances|length }};i++){
+      $("#film"+i).removeClass('FVisible').addClass('Fmasque');   
+    }
   }
   $("td").hover(function(){
       $("td").css({"background-color": ""});

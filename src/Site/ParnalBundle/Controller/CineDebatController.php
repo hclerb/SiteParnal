@@ -110,8 +110,6 @@ class CineDebatController extends Controller
         $request = $this->getRequest();
         $form    = $this->createForm(new CineDebatType(), $entity);
         $form->bindRequest($request);
-        $entity->setNbgratuits(0);
-        $entity->setNbpayants(0);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();

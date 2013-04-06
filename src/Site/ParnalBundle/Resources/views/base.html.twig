@@ -42,7 +42,6 @@
             <div id=tabseance>
                 <p id="BpListerSR">Lister les séances restantes</p>
                 <p id="BpListerS">Lister toutes les Séances</p>
-                <p id="BpListerSI">Lister les séances incomplètes</p>
                 <p id="BpAjouterS">Ajouter une séance</p> 
                 <p id="BpAjouterC">Ajouter une séance ciné-débat</p> 
                 <p id="BpAjouterI">Ajouter un intervenant</p>
@@ -102,10 +101,6 @@
        $("#BpListerS").button().click(function(event)
          {
            $("#zoneseance").load("{{ path('seance') }}"); 
-         }); 
-       $("#BpListerSI").button().click(function(event)
-         {
-           $("#zoneseance").load("{{ path('seance_incomp') }}"); 
          });          
         $("#BpAjouterS").button().click(function(event)
          {

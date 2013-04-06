@@ -12,7 +12,9 @@ class ProgrammeType extends AbstractType
     {
         $builder
             ->add('presentation','textarea', array('attr' => array('class' => 'tinymce','tinymce'=>'{"theme":"simple"}','cols' => "70", 'rows' => "15")))
-            ->add('fichier','file')
+            ->add('fichier','text', 
+                    array('read_only' => 'true'))
+            ->add('file','file')
             ->add('finaffichage','date',
                     array('widget' => 'single_text',                     
                           'label' => 'Date de sortie',

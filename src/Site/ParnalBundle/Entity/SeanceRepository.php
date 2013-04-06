@@ -147,16 +147,5 @@ class SeanceRepository extends EntityRepository
 
        return $queryBuilder->getQuery()
                            ->getResult();
-   } 
-   
-   public function findincompadmin()
-   {
-       $datejour = new \DateTime();
-       $queryBuilder = $this->createQueryBuilder('s');
-       $queryBuilder->where('s.nbpayants = 0 ')
-                     ->orderBy('s.jour','ASC');
-              
-       return $queryBuilder->getQuery()
-                           ->getResult();
-   }   
+   }  
 }

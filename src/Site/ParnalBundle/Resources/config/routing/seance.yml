@@ -27,23 +27,10 @@ seance_update:
     pattern:  /{id}/update
     defaults: { _controller: "SiteParnalBundle:Seance:update" }
     requirements: { _method: post }
-
-seance_editentree:
-    pattern:  /{id}/editentree
-    defaults: { _controller: "SiteParnalBundle:Seance:editentree" }
-
-seance_updateentree:
-    pattern:  /{id}/updateentree
-    defaults: { _controller: "SiteParnalBundle:Seance:updateentree" }
-    requirements: { _method: post }
-
-seance_incomp:
-    pattern:  /indexincomp
-    defaults: { _controller: "SiteParnalBundle:Seance:indexincomp" }
     
-seance_nowcinedebat:
-    pattern:  /{id}/nowcinedebat
-    defaults: { _controller: "SiteParnalBundle:Seance:nowcinedebat" }
+seance_newcinedebat:
+    pattern:  /{id}/newcinedebat
+    defaults: { _controller: "SiteParnalBundle:Seance:newcinedebat" }
     
 seance_delete:
     pattern:  /{id}/delete

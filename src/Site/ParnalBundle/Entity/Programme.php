@@ -43,6 +43,7 @@ class Programme {
      */    
     protected $finaffichage;
 
+    protected $file;
 
     /**
      * Get id
@@ -113,4 +114,16 @@ class Programme {
     {
         return $this->finaffichage;
     }
+
+    // setter et getter du fichier réel
+    public function setFile($fichier)
+    {
+        $this->file = $fichier;
+    }
+
+    public function getFile()
+    {
+        return $this->file;
+    }
+
 }

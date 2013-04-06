@@ -112,8 +112,6 @@ class SeanceController extends Controller
         $entity  = new Seance();
         $request = $this->getRequest();
         $form    = $this->createForm(new SeanceType(), $entity);
-        $entity->setNbgratuits(0);
-        $entity->setNbpayants(0);
         $form->bindRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getEntityManager();
@@ -199,68 +197,7 @@ class SeanceController extends Controller
             'delete_form' => $deleteForm->createView(),
         ));
     }
-
-    /**
-     * Displays a form to edit an existing Seance entity.
-     *
-     */
-    public function editentreeAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('SiteParnalBundle:Seance')->find($id);     
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Seance entity.');
-        }
-        $heure = new \DateTime;
-        $heure->setTime($entity->getJour()->format('H'),$entity->getJour()->format('i'));
-        $entity->setHeure($heure);
-        $editForm = $this->createForm(new SeanceentreeType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('SiteParnalBundle:Seance:editentree.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Edits an existing Seance entity.
-     *
-     */
-    public function updateentreeAction($id)
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entity = $em->getRepository('SiteParnalBundle:Seance')->find($id);
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Seance entity.');
-        }
-
-        $editForm   = $this->createForm(new SeanceentreeType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        $request = $this->getRequest();
-
-        $editForm->bindRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            $response = new \Symfony\Component\HttpFoundation\Response();
-            $response->setContent(1);
-            return $response; 
-        }
-
-        return $this->render('SiteParnalBundle:Seance:edit.html.twig', array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
+    
     /**
      * Deletes a Seance entity.
      *
@@ -289,21 +226,7 @@ class SeanceController extends Controller
         }
     }
     
-    /**
-     * Lists all Seance entities.
-     *
-     */
-    public function indexincompAction()
-    {
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $entities = $em->getRepository('SiteParnalBundle:Seance')->findincompadmin();
-        return $this->render('SiteParnalBundle:Seance:index.html.twig', array(
-            'entities' => $entities
-        ));
-    }
-
-    public function nowcinedebatAction($id)
+    public function newcinedebatAction($id)
     {
         $em = $this->getDoctrine()->getEntityManager();
 

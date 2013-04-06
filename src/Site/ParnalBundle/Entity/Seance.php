@@ -60,20 +60,7 @@ class Seance
      */
     protected $scolaire; 
     
-    /**
-     * @var integer $nbgratuits
-     *
-     * @ORM\Column(name="nbgratuits", type="integer")
-     */
-    protected $nbgratuits;    
-    
-    /**
-     * @var integer $nbpayants
-     *
-     * @ORM\Column(name="nbpayants", type="integer")
-     */
-    protected $nbpayants; 
-    
+  
     /**      
     * @ORM\ManyToOne(targetEntity="Site\ParnalBundle\Entity\Film")      
     */     
@@ -238,49 +225,6 @@ class Seance
     {
         return $this->scolaire;
     }
-
-    /**
-     * Get nbpayants
-     *
-     * @return integer 
-     */
-    public function getNbpayants()
-    {
-        return $this->nbpayants;
-    }    
-
-    /**
-     * Set nbpayants
-     *
-     * @param integer $nbpayants
-     */
-    public function setNbpayants($nbpayants)
-    {
-        $this->nbpayants = $nbpayants;
-    }
-
-    /**
-     * Get nbgratuits
-     *
-     * @return integer 
-     */
-    public function getNbgratuits()
-    {
-        return $this->nbgratuits;
-    }    
-
-    /**
-     * Set nbgratuits
-     *
-     * @param integer $nbgratuits
-     */
-    public function setNbgratuits($nbgratuits)
-    {
-        $this->nbgratuits = $nbgratuits;
-    }    
-    
-    
-    
     
     protected $heure;
     

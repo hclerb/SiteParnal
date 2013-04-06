@@ -2,10 +2,13 @@
 
 namespace Site\ParnalBundle\Controller;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
 
 use Site\ParnalBundle\Entity\Programme;
 use Site\ParnalBundle\Form\ProgrammeType;
+use Site\ParnalBundle\Form\ProgrammeCreateType;
 
 /**
  * Programme controller.
@@ -59,7 +62,7 @@ class ProgrammeController extends Controller
     {
         $entity = new Programme();
         $entity->setFinaffichage(new \DateTime());
-        $form   = $this->createForm(new ProgrammeType(), $entity);
+        $form   = $this->createForm(new ProgrammeCreateType(), $entity);
 
         return $this->render('SiteParnalBundle:Programme:new.html.twig', array(
             'entity' => $entity,
@@ -75,11 +78,11 @@ class ProgrammeController extends Controller
     {
         $entity  = new Programme();
         $request = $this->getRequest();
-        $form    = $this->createForm(new ProgrammeType(), $entity);
+        $form    = $this->createForm(new ProgrammeCreateType(), $entity);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
-            $filename = $entity->getFichier();
+            $filename = $entity->getFile();
             $nom_fichier = $filename->getClientOriginalName();
             $filename->move('img_film/telechargements/', $nom_fichier);
             $entity->setFichier($nom_fichier);
@@ -111,7 +114,7 @@ class ProgrammeController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Programme entity.');
         }
-
+        $entity->setFile(new File('img_film/telechargements/'.$entity->getFichier()));
         $editForm = $this->createForm(new ProgrammeType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -136,18 +139,22 @@ class ProgrammeController extends Controller
             throw $this->createNotFoundException('Unable to find Programme entity.');
         }
 
+
         $editForm   = $this->createForm(new ProgrammeType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
         $editForm->bindRequest($request);
-
+        
         if ($editForm->isValid()) {
-            $filename = $entity->getFichier();
-            $nom_fichier = $filename->getClientOriginalName();
-            $filename->move('img_film/telechargements/', $nom_fichier);
-            $entity->setFichier($nom_fichier);
+            if ($entity->getFile()!=NULL)
+            {
+              $filename = $entity->getFile();
+              $nom_fichier = $filename->getClientOriginalName();
+              $filename->move('img_film/telechargements/', $nom_fichier);
+              $entity->setFichier($nom_fichier);
+            }
             $em->persist($entity);
             $em->flush();
 

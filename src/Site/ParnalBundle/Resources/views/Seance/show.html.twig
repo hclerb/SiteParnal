@@ -37,14 +37,6 @@
             <td>{{ entity.lemulti.titre }}</td>
           </tr>
         {% endif %}
-        <tr>
-            <th>Entrées Gratuites</th>
-            <td>{{ entity.nbgratuits }}</td>
-        </tr>
-        <tr>
-            <th>Entrées Payantes</th>
-            <td>{{ entity.nbpayants }}</td>
-        </tr>
     </tbody>
 </table>
 <p id="Bpedit">edit</p>
@@ -62,7 +54,7 @@ $(function(){
 
   $("#Bptransform").button().click(function(event)
    {
-     $("#zoneseance").load("{{ path('seance_nowcinedebat', { 'id': entity.id }) }}");           
+     $("#zoneseance").load("{{ path('seance_newcinedebat', { 'id': entity.id }) }}");           
    }); 
    
   $("form").submit(function()

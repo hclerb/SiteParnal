@@ -111,8 +111,6 @@ class CineDebat extends Seance
         $this->lefilm = $theseance->getLefilm();
         $this->vo = $theseance->getVo();
         $this->argentique = $theseance->getArgentique();
-        $this->nbgratuits = $theseance->getNbgratuits();
-        $this->nbpayants = $theseance->getNbpayants();
         $this->lemulti = $theseance->getLemulti();
         $this->relief = $theseance->getRelief();
         $this->scolaire = $theseance->getScolaire();

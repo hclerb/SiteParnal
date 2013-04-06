@@ -6,13 +6,13 @@
 <script type="text/javascript">
 $(function(){
       $("#bpsub").button();
-      $("#site_parnalbundle_programmetype_finaffichage").datepicker();
+      $("#site_parnalbundle_programmecreatetype_finaffichage").datepicker();
       var options = { 
         type:           "POST",
         success: function() {
                $("#resume").val("");
-               $("#site_parnalbundle_programmetype_presentation").val("");
-               fileField     = document.getElementById("site_parnalbundle_programmetype_fichier");
+               $("#site_parnalbundle_programmecreatetype_presentation").val("");
+               fileField     = document.getElementById("site_parnalbundle_programmecreatetype_file");
                parentNod     = fileField.parentNode;
                tmpForm        = document.createElement("form");
                parentNod.replaceChild(tmpForm,fileField);

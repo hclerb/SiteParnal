@@ -12,8 +12,6 @@
             <td>{% if entity.scolaire ==0 %} Public {% else %} Scolaire {% endif %}</td>
             <td>{% if entity.vo !=0 %}  VO {% else %} VF {% endif %}</td>
             <td>{% if entity.relief !=0 %}  3D {% endif %}</td>
-            <td>{{ entity.nbgratuits }} gratuits</td>
-            <td>{{ entity.nbpayants }} payants</td>
             <td>{% if entity.lemulti.id !=0 %}  {{ entity.lemulti.titre }}{% endif %}</td>
             <td>
                 {% if entity.titre is defined %}
@@ -23,7 +21,6 @@
                     <span class="Bp" chemin="{{ path('seance_show', { 'id': entity.id }) }}">show</span>
                     <span class="Bp" chemin="{{ path('seance_edit', { 'id': entity.id }) }}">edit</span>
                 {% endif %}
-                <span class="Bp" chemin="{{ path('seance_editentree', { 'id': entity.id }) }}">Saisie Chiffres</span>
              </td>
         </tr>
     {% endfor %}

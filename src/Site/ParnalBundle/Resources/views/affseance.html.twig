@@ -24,6 +24,7 @@
                 <h4>{{ laseance.lefilm.titre }}
                 {% if laseance.vo !=0 %}VOST{% endif %}
                 {% if laseance.relief !=0 %}3D{% endif %}
+                {% if laseance.pleinair !=0 %}PLEIN AIR{% endif %}
                 </span>
                 </h4>
                </td>
@@ -54,6 +55,7 @@
         <div class='row resu'>
             {{ laseance.lefilm.synopsis|raw }}
             {{ laseance.lefilm.critique|raw }}
+            {% if laseance.pleinair !=0 %}<h4 id="pleinair">CHOUETTE LA SEANCE EST EN PLEIN AIR ! <br/><br/>Retrouvez nous à {{ laseance.lieupleinair }}</h4>{% endif %}        
         </div>
         <div class="row main_photo">
           {% for lesblocsphotos in lesphotos %}

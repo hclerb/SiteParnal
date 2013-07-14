@@ -20,6 +20,7 @@
           {{ laseance.jour|date('H:i') }}</br>
           {% if laseance.vo !=0 %}VO{% endif %}
           {% if laseance.relief !=0 %}3D{% endif %}
+          {% if laseance.pleinair !=0 %}PLEIN AIR{% endif %}
           {% if laseance.titre is defined %}</div>{% endif %}
          </p>
        {% endfor %}

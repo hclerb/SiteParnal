@@ -30,6 +30,8 @@ class SeanceType extends AbstractType
                         'class' => 'SiteParnalBundle:MultiEv',  
                         'required' => 'false'))
             ->add('scolaire', 'checkbox', array('required' => false))
+            ->add('pleinair', 'checkbox', array('required' => false))
+            ->add('lieupleinair', null, array('required' => false))
             ->add('vo', 'checkbox', array('required' => false))
             ->add('relief', 'checkbox', array('required' => false))
             ->add('argentique', 'checkbox', array('required' => false))

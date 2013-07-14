@@ -60,7 +60,20 @@ class Seance
      */
     protected $scolaire; 
     
+     /**
+     * @var boolean $pleinair
+     *
+     * @ORM\Column(name="pleinair", type="boolean")
+     */
+    protected $pleinair; 
   
+    /**
+     * @var string $titre
+     *
+     * @ORM\Column(name="lieupleinair", type="string", length=255,nullable=true)
+     */
+    private $lieupleinair;  
+    
     /**      
     * @ORM\ManyToOne(targetEntity="Site\ParnalBundle\Entity\Film")      
     */     
@@ -249,4 +262,50 @@ class Seance
     }    
     
     
+
+    /**
+     * Set pleinair
+     *
+     * @param boolean $pleinair
+     * @return Seance
+     */
+    public function setPleinair($pleinair)
+    {
+        $this->pleinair = $pleinair;
+
+        return $this;
+    }
+
+    /**
+     * Get pleinair
+     *
+     * @return boolean 
+     */
+    public function getPleinair()
+    {
+        return $this->pleinair;
+    }
+
+    /**
+     * Set lieupleinair
+     *
+     * @param string $lieupleinair
+     * @return Seance
+     */
+    public function setLieupleinair($lieupleinair)
+    {
+        $this->lieupleinair = $lieupleinair;
+
+        return $this;
+    }
+
+    /**
+     * Get lieupleinair
+     *
+     * @return string 
+     */
+    public function getLieupleinair()
+    {
+        return $this->lieupleinair;
+    }
 }

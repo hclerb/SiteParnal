@@ -28,6 +28,9 @@ body {
     margin-right: 5px;
 }
 
+#pleinair {
+    color: green;
+}
 
 .Fresu h2 {
     font-size: 22px;

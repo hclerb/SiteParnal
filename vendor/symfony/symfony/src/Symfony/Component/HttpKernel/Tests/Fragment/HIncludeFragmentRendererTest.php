@@ -50,7 +50,7 @@ class HIncludeFragmentRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('<hx:include src="/foo"></hx:include>', $strategy->render('/foo', Request::create('/'))->getContent());
     }
 
-    public function testRenderWhithDefault()
+    public function testRenderWithDefault()
     {
         // only default
         $strategy = new HIncludeFragmentRenderer();
@@ -62,6 +62,34 @@ class HIncludeFragmentRendererTest extends \PHPUnit_Framework_TestCase
 
         // global default and default
         $strategy = new HIncludeFragmentRenderer(null, null, 'global_default');
+        $this->assertEquals('<hx:include src="/foo">default</hx:include>', $strategy->render('/foo', Request::create('/'), array('default' => 'default'))->getContent());
+    }
+
+    public function testRenderWithAttributesOptions()
+    {
+        // with id
+        $strategy = new HIncludeFragmentRenderer();
+        $this->assertEquals('<hx:include src="/foo" id="bar">default</hx:include>', $strategy->render('/foo', Request::create('/'), array('default' => 'default', 'id' => 'bar'))->getContent());
+
+        // with attributes
+        $strategy = new HIncludeFragmentRenderer();
+        $this->assertEquals('<hx:include src="/foo" p1="v1" p2="v2">default</hx:include>', $strategy->render('/foo', Request::create('/'), array('default' => 'default', 'attributes' => array('p1' => 'v1', 'p2' => 'v2')))->getContent());
+
+        // with id & attributes
+        $strategy = new HIncludeFragmentRenderer();
+        $this->assertEquals('<hx:include src="/foo" p1="v1" p2="v2" id="bar">default</hx:include>', $strategy->render('/foo', Request::create('/'), array('default' => 'default', 'id' => 'bar', 'attributes' => array('p1' => 'v1', 'p2' => 'v2')))->getContent());
+    }
+
+    public function testRenderWithDefaultText()
+    {
+        $engine = $this->getMock('Symfony\\Component\\Templating\\EngineInterface');
+        $engine->expects($this->once())
+            ->method('exists')
+            ->with('default')
+            ->will($this->throwException(new \InvalidArgumentException()));
+
+        // only default
+        $strategy = new HIncludeFragmentRenderer($engine);
         $this->assertEquals('<hx:include src="/foo">default</hx:include>', $strategy->render('/foo', Request::create('/'), array('default' => 'default'))->getContent());
     }
 }

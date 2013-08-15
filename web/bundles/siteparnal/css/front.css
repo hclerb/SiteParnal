@@ -28,6 +28,9 @@ body {
     margin-right: 5px;
 }
 
+#pleinair {
+    color: green;
+}
 
 .Fresu h2 {
     font-size: 22px;
@@ -355,10 +358,6 @@ body {
 }
 .lebut2 a {
     width: 177px;
-}
-
-#pleinair {
-    color : green;
 }
 .espace {
     margin-left: 2em;

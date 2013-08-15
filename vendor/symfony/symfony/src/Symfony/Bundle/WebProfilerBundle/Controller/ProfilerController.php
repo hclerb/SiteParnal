@@ -43,7 +43,7 @@ class ProfilerController
      * @param array                 $templates       The templates
      * @param string                $toolbarPosition The toolbar position (top, bottom, normal, or null -- use the configuration)
      */
-    public function __construct(UrlGeneratorInterface $generator, Profiler $profiler, \Twig_Environment $twig, array $templates, $toolbarPosition = 'normal')
+    public function __construct(UrlGeneratorInterface $generator, Profiler $profiler = null, \Twig_Environment $twig, array $templates, $toolbarPosition = 'normal')
     {
         $this->generator = $generator;
         $this->profiler = $profiler;
@@ -59,9 +59,13 @@ class ProfilerController
      */
     public function homeAction()
     {
+        if (null === $this->profiler) {
+            throw new NotFoundHttpException('The profiler must be enabled.');
+        }
+
         $this->profiler->disable();
 
-        return new RedirectResponse($this->generator->generate('_profiler_search_results', array('token' => 'empty', 'limit' => 10)));
+        return new RedirectResponse($this->generator->generate('_profiler_search_results', array('token' => 'empty', 'limit' => 10)), 302, array('Content-Type' => 'text/html'));
     }
 
     /**
@@ -76,13 +80,17 @@ class ProfilerController
      */
     public function panelAction(Request $request, $token)
     {
+        if (null === $this->profiler) {
+            throw new NotFoundHttpException('The profiler must be enabled.');
+        }
+
         $this->profiler->disable();
 
         $panel = $request->query->get('panel', 'request');
         $page = $request->query->get('page', 'home');
 
         if (!$profile = $this->profiler->loadProfile($token)) {
-            return new Response($this->twig->render('@WebProfiler/Profiler/info.html.twig', array('about' => 'no_token', 'token' => $token)));
+            return new Response($this->twig->render('@WebProfiler/Profiler/info.html.twig', array('about' => 'no_token', 'token' => $token)), 200, array('Content-Type' => 'text/html'));
         }
 
         if (!$profile->hasCollector($panel)) {
@@ -98,7 +106,7 @@ class ProfilerController
             'request'   => $request,
             'templates' => $this->getTemplateManager()->getTemplates($profile),
             'is_ajax'   => $request->isXmlHttpRequest(),
-        )));
+        )), 200, array('Content-Type' => 'text/html'));
     }
 
     /**
@@ -112,6 +120,10 @@ class ProfilerController
      */
     public function exportAction($token)
     {
+        if (null === $this->profiler) {
+            throw new NotFoundHttpException('The profiler must be enabled.');
+        }
+
         $this->profiler->disable();
 
         if (!$profile = $this->profiler->loadProfile($token)) {
@@ -131,10 +143,14 @@ class ProfilerController
      */
     public function purgeAction()
     {
+        if (null === $this->profiler) {
+            throw new NotFoundHttpException('The profiler must be enabled.');
+        }
+
         $this->profiler->disable();
         $this->profiler->purge();
 
-        return new RedirectResponse($this->generator->generate('_profiler_info', array('about' => 'purge')));
+        return new RedirectResponse($this->generator->generate('_profiler_info', array('about' => 'purge')), 302, array('Content-Type' => 'text/html'));
     }
 
     /**
@@ -146,19 +162,23 @@ class ProfilerController
      */
     public function importAction(Request $request)
     {
+        if (null === $this->profiler) {
+            throw new NotFoundHttpException('The profiler must be enabled.');
+        }
+
         $this->profiler->disable();
 
         $file = $request->files->get('file');
 
         if (empty($file) || !$file->isValid()) {
-            return new RedirectResponse($this->generator->generate('_profiler_info', array('about' => 'upload_error')));
+            return new RedirectResponse($this->generator->generate('_profiler_info', array('about' => 'upload_error')), 302, array('Content-Type' => 'text/html'));
         }
 
         if (!$profile = $this->profiler->import(file_get_contents($file->getPathname()))) {
-            return new RedirectResponse($this->generator->generate('_profiler_info', array('about' => 'already_exists')));
+            return new RedirectResponse($this->generator->generate('_profiler_info', array('about' => 'already_exists')), 302, array('Content-Type' => 'text/html'));
         }
 
-        return new RedirectResponse($this->generator->generate('_profiler', array('token' => $profile->getToken())));
+        return new RedirectResponse($this->generator->generate('_profiler', array('token' => $profile->getToken())), 302, array('Content-Type' => 'text/html'));
     }
 
     /**
@@ -170,11 +190,15 @@ class ProfilerController
      */
     public function infoAction($about)
     {
+        if (null === $this->profiler) {
+            throw new NotFoundHttpException('The profiler must be enabled.');
+        }
+
         $this->profiler->disable();
 
         return new Response($this->twig->render('@WebProfiler/Profiler/info.html.twig', array(
             'about' => $about
-        )));
+        )), 200, array('Content-Type' => 'text/html'));
     }
 
     /**
@@ -187,6 +211,10 @@ class ProfilerController
      */
     public function toolbarAction(Request $request, $token)
     {
+        if (null === $this->profiler) {
+            throw new NotFoundHttpException('The profiler must be enabled.');
+        }
+
         $session = $request->getSession();
 
         if (null !== $session && $session->getFlashBag() instanceof AutoExpireFlashBag) {
@@ -195,13 +223,13 @@ class ProfilerController
         }
 
         if (null === $token) {
-            return new Response();
+            return new Response('', 200, array('Content-Type' => 'text/html'));
         }
 
         $this->profiler->disable();
 
         if (!$profile = $this->profiler->loadProfile($token)) {
-            return new Response();
+            return new Response('', 200, array('Content-Type' => 'text/html'));
         }
 
         // the toolbar position (top, bottom, normal, or null -- use the configuration)
@@ -222,7 +250,7 @@ class ProfilerController
             'templates'    => $this->getTemplateManager()->getTemplates($profile),
             'profiler_url' => $url,
             'token'        => $token,
-        )));
+        )), 200, array('Content-Type' => 'text/html'));
     }
 
     /**
@@ -234,6 +262,10 @@ class ProfilerController
      */
     public function searchBarAction(Request $request)
     {
+        if (null === $this->profiler) {
+            throw new NotFoundHttpException('The profiler must be enabled.');
+        }
+
         $this->profiler->disable();
 
         if (null === $session = $request->getSession()) {
@@ -262,7 +294,7 @@ class ProfilerController
             'start'  => $start,
             'end'    => $end,
             'limit'  => $limit,
-        )));
+        )), 200, array('Content-Type' => 'text/html'));
     }
 
     /**
@@ -275,6 +307,10 @@ class ProfilerController
      */
     public function searchResultsAction(Request $request, $token)
     {
+        if (null === $this->profiler) {
+            throw new NotFoundHttpException('The profiler must be enabled.');
+        }
+
         $this->profiler->disable();
 
         $profile = $this->profiler->loadProfile($token);
@@ -297,7 +333,7 @@ class ProfilerController
             'end'       => $end,
             'limit'     => $limit,
             'panel'     => null,
-        )));
+        )), 200, array('Content-Type' => 'text/html'));
     }
 
     /**
@@ -309,6 +345,10 @@ class ProfilerController
      */
     public function searchAction(Request $request)
     {
+        if (null === $this->profiler) {
+            throw new NotFoundHttpException('The profiler must be enabled.');
+        }
+
         $this->profiler->disable();
 
         $ip     = preg_replace('/[^:\d\.]/', '', $request->query->get('ip'));
@@ -330,7 +370,7 @@ class ProfilerController
         }
 
         if (!empty($token)) {
-            return new RedirectResponse($this->generator->generate('_profiler', array('token' => $token)));
+            return new RedirectResponse($this->generator->generate('_profiler', array('token' => $token)), 302, array('Content-Type' => 'text/html'));
         }
 
         $tokens = $this->profiler->find($ip, $url, $limit, $method, $start, $end);
@@ -343,7 +383,7 @@ class ProfilerController
             'start'  => $start,
             'end'    => $end,
             'limit'  => $limit,
-        )));
+        )), 302, array('Content-Type' => 'text/html'));
     }
 
     /**
@@ -353,13 +393,17 @@ class ProfilerController
      */
     public function phpinfoAction()
     {
+        if (null === $this->profiler) {
+            throw new NotFoundHttpException('The profiler must be enabled.');
+        }
+
         $this->profiler->disable();
 
         ob_start();
         phpinfo();
         $phpinfo = ob_get_clean();
 
-        return new Response($phpinfo);
+        return new Response($phpinfo, 200, array('Content-Type' => 'text/html'));
     }
 
     /**

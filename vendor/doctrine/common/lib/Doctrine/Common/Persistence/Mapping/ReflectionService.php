@@ -33,9 +33,6 @@ interface ReflectionService
      * Return an array of the parent classes (not interfaces) for the given class.
      *
      * @param string $class
-     *
-     * @throws \Doctrine\Common\Persistence\Mapping\MappingException
-     *
      * @return array
      */
     function getParentClasses($class);

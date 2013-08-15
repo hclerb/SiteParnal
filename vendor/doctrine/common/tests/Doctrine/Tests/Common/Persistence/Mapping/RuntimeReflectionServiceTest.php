@@ -26,12 +26,7 @@ use Doctrine\Common\Persistence\Mapping\RuntimeReflectionService;
  */
 class RuntimeReflectionServiceTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var RuntimeReflectionService
-     */
     private $reflectionService;
-
-    public $unusedPublicProperty;
 
     public function setUp()
     {
@@ -54,12 +49,6 @@ class RuntimeReflectionServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(count($classes) >= 1, "The test class ".__CLASS__." should have at least one parent.");
     }
 
-    public function testGetParentClassesForAbsentClass()
-    {
-        $this->setExpectedException('Doctrine\Common\Persistence\Mapping\MappingException');
-        $this->reflectionService->getParentClasses(__NAMESPACE__ . '\AbsentClass');
-    }
-
     public function testGetReflectionClass()
     {
         $class = $this->reflectionService->getClass(__CLASS__);
@@ -76,9 +65,6 @@ class RuntimeReflectionServiceTest extends \PHPUnit_Framework_TestCase
     {
         $reflProp = $this->reflectionService->getAccessibleProperty(__CLASS__, "reflectionService");
         $this->assertInstanceOf("ReflectionProperty", $reflProp);
-
-        $reflProp = $this->reflectionService->getAccessibleProperty(__CLASS__, "unusedPublicProperty");
-        $this->assertInstanceOf("Doctrine\Common\Reflection\RuntimePublicReflectionProperty", $reflProp);
     }
 }
 

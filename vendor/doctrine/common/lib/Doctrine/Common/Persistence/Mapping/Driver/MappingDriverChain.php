@@ -139,12 +139,6 @@ class MappingDriverChain implements MappingDriver
             }
         }
 
-        if (null !== $this->defaultDriver) {
-            foreach ($this->defaultDriver->getAllClassNames() as $className) {
-                $classNames[$className] = true;
-            }
-        }
-
         return array_keys($classNames);
     }
 
